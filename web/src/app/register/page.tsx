@@ -3,7 +3,6 @@
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -11,7 +10,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { Label } from "@/components/ui/label";
 import {
   FormLabel,
   FormItem,
@@ -23,6 +21,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
 
 const formSchema = z.object({
   username: z
@@ -56,7 +55,7 @@ export const page: React.FC<pageProps> = ({}) => {
     <div className="w-screen h-screen flex justify-center items-center">
       <Card className="w-[350px]">
         <CardHeader>
-          <CardTitle>Sign up</CardTitle>
+          <CardTitle>Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -114,9 +113,12 @@ export const page: React.FC<pageProps> = ({}) => {
         <CardFooter className="flex flex-col">
           <div className="flex w-full justify-center text-sm font-semibold">
             <div>Already Registered?</div>
-            <a className="text-primary underline ml-1 hover:cursor-pointer">
+            <Link
+              href="/login"
+              className="text-primary underline ml-1 hover:cursor-pointer"
+            >
               Login
-            </a>
+            </Link>
           </div>
         </CardFooter>
       </Card>

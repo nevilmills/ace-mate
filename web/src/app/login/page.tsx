@@ -23,6 +23,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Link from "next/link";
 
 const formSchema = z.object({
   username: z
@@ -125,9 +126,12 @@ export const page: React.FC<pageProps> = ({}) => {
         <CardFooter className="flex flex-col">
           <div className="flex w-full justify-center text-sm font-semibold">
             <div>Don't have an account?</div>
-            <a className="text-primary underline ml-1 hover:cursor-pointer">
-              Sign up here
-            </a>
+            <Link
+              href="/register"
+              className="text-primary underline ml-1 hover:cursor-pointer"
+            >
+              Sign Up
+            </Link>
           </div>
         </CardFooter>
       </Card>
