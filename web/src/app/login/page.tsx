@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -10,10 +12,46 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { Label } from "@/components/ui/label";
+import {
+  FormLabel,
+  FormItem,
+  FormControl,
+  FormField,
+  Form,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const formSchema = z.object({
+  username: z
+    .string()
+    .min(2, { message: "Username must be at least 2 characters." })
+    .max(25, { message: "Username must be less than 25 characters." }),
+  password: z
+    .string()
+    .min(3, { message: "Password must be at least 3 characters." })
+    .max(25, { message: "Password must be less than 25 characters." }),
+});
 
 interface pageProps {}
 
 export const page: React.FC<pageProps> = ({}) => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Do something with the form values.
+    // ✅ This will be type-safe and validated.
+    console.log(values);
+  }
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
       <Card className="w-[350px]">
@@ -23,41 +61,68 @@ export const page: React.FC<pageProps> = ({}) => {
             Your latest golf statistics await...
           </CardDescription>
         </CardHeader>
-        <CardContent className="">
-          <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name" className="font-semibold">
-                Username
-              </Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Tiger Woods"
-                className="w-full"
-              />
-            </div>
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="password" className="font-semibold">
-                Password
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                className="w-full"
-              />
-            </div>
-          </div>
-          <div className="h-3" />
-          <div className="flex w-full justify-end text-sm text-primary">
-            <div>
-              <a className="underline hover:cursor-pointer">Forgot Password?</a>
-            </div>
-          </div>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div
+                className="grid w-full items-center gap-4"
+                onSubmit={form.handleSubmit(onSubmit)}
+              >
+                <FormField
+                  name="username"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-1.5">
+                      <FormLabel className="font-semibold">Username</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Tiger Woods"
+                          className="w-full"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="password"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-1.5">
+                      <FormLabel htmlFor="password" className="font-semibold">
+                        Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="••••••••"
+                          className="w-full"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="h-3" />
+              <div className="flex w-full justify-end text-sm text-primary">
+                <div>
+                  <a className="underline hover:cursor-pointer">
+                    Forgot Password?
+                  </a>
+                </div>
+              </div>
+              <div className="h-6" />
+              <Button className="w-full font-bold" type="submit">
+                Login
+              </Button>
+            </form>
+          </Form>
         </CardContent>
         <CardFooter className="flex flex-col">
-          <Button className="w-full font-bold">Login</Button>
-          <div className="h-6" />
           <div className="flex w-full justify-center text-sm font-semibold">
             <div>Don't have an account?</div>
             <a className="text-primary underline ml-1 hover:cursor-pointer">
