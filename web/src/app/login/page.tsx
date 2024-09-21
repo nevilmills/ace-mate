@@ -6,23 +6,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import React from "react";
 
 interface pageProps {}
 
 export const page: React.FC<pageProps> = ({}) => {
   return (
-    <div className="w-screen h-screen bg-slate-500 flex justify-center items-center">
+    <div className="w-screen h-screen flex justify-center items-center">
       <Card className="w-[350px]">
         <CardHeader>
           <CardTitle>Login</CardTitle>
-          <CardDescription>Card Description</CardDescription>
+          <CardDescription>
+            Your latest golf statistics await...
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <p>Card Content</p>
+          <div className="space-y-4">
+            <Input type="text" placeholder="Username" className="w-full" />
+            <Input type="password" placeholder="Password" className="w-full" />
+          </div>
         </CardContent>
         <CardFooter>
-          <p>Card Footer</p>
+          <Button className="w-full">Login</Button>
         </CardFooter>
       </Card>
     </div>
