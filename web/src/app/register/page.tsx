@@ -29,6 +29,8 @@ const formSchema = z.object({
     .string()
     .min(2, { message: "Username must be at least 2 characters." })
     .max(25, { message: "Username must be less than 25 characters." }),
+
+  email: z.string().email({ message: "Please enter a valid email address." }),
   password: z
     .string()
     .min(3, { message: "Password must be at least 3 characters." })
@@ -42,15 +44,15 @@ export const page: React.FC<pageProps> = ({}) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      email: "",
       password: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     console.log(values);
-    await createUser();
+
+    await createUser(values);
   };
 
   return (
@@ -73,11 +75,21 @@ export const page: React.FC<pageProps> = ({}) => {
                     <FormItem className="flex flex-col space-y-1.5">
                       <FormLabel className="font-semibold">Username</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Rickie Fowler"
-                          className="w-full"
-                          {...field}
-                        />
+                        <Input placeholder="" className="w-full" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  name="email"
+                  control={form.control}
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col space-y-1.5">
+                      <FormLabel className="font-semibold">Email</FormLabel>
+                      <FormControl>
+                        <Input placeholder="" className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -95,7 +107,7 @@ export const page: React.FC<pageProps> = ({}) => {
                       <FormControl>
                         <Input
                           type="password"
-                          placeholder="••••••••"
+                          placeholder=""
                           className="w-full"
                           {...field}
                         />

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "watch": "tsx watch src/db/test.ts"
+    "watch": "tsx watch src/lib/test.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
