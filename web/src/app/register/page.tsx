@@ -22,6 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Link from "next/link";
+import { createUser } from "@/db/queries/user/insert";
 
 const formSchema = z.object({
   username: z
@@ -45,11 +46,12 @@ export const page: React.FC<pageProps> = ({}) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
-  }
+    await createUser();
+  };
 
   return (
     <div className="w-screen h-screen flex justify-center items-center">
