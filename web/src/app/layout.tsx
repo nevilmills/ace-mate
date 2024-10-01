@@ -51,6 +51,24 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <header className="p-4 text-primary">
+              <nav className="flex flex-row justify-between">
+                <div>
+                  <a href="/" className="text-lg font-bold">
+                    Golf Companion
+                  </a>
+                </div>
+                <div>
+                  <SignedIn>
+                    <UserButton />
+                  </SignedIn>
+                  <SignedOut>
+                    <SignInButton />
+                  </SignedOut>
+                </div>
+              </nav>
+            </header>
+            <div className="h-4" />
             {children}
           </ThemeProvider>
         </body>
