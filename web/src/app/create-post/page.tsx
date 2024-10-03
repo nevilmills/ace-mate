@@ -62,7 +62,7 @@ const page: React.FC = () => {
 
   return (
     <div className="absolute top-0 flex flex-col w-screen h-screen items-center justify-center">
-      <Card className="w-96">
+      <Card className="w-96 h-52 flex flex-col justify-between">
         <CardHeader>
           <CardTitle>Select Course</CardTitle>
         </CardHeader>
@@ -78,13 +78,13 @@ const page: React.FC = () => {
                 {value
                   ? courses.find((framework) => framework.value === value)
                       ?.label
-                  : "Select framework..."}
+                  : "Choose golf course..."}
                 <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[250px] p-0">
               <Command>
-                <CommandInput placeholder="Search framework..." />
+                <CommandInput placeholder="Search courses..." />
                 <CommandList>
                   <CommandEmpty>No framework found.</CommandEmpty>
                   <CommandGroup>
