@@ -43,7 +43,7 @@ export default function RootLayout({
     >
       <html lang="en">
         <body
-          className={`${geistSans.className} ${geistMono.variable} antialiased`}
+          className={`${geistSans.className} ${geistMono.variable} antialiased flex flex-col min-h-screen`}
         >
           <ThemeProvider
             attribute="class"
@@ -51,7 +51,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <header className="p-4 px-12 text-primary">
+            <header className="p-4 px-12 text-primary fixed w-screen h-[68px]">
               <nav className="flex flex-row justify-between">
                 <div>
                   <a href="/" className="text-lg font-bold">
@@ -68,7 +68,7 @@ export default function RootLayout({
                 </div>
               </nav>
             </header>
-            {children}
+            <div className="grow flex flex-col pt-[68px]">{children}</div>
           </ThemeProvider>
         </body>
       </html>
