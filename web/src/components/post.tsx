@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader } from "./ui/card";
+import { Card, CardHeader, CardTitle } from "./ui/card";
 
 interface postProps {
   title: string;
@@ -8,7 +8,9 @@ interface postProps {
 export const Post: React.FC<postProps> = ({ title }) => {
   return (
     <Card>
-      <CardHeader>{title}</CardHeader>
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+      </CardHeader>
     </Card>
   );
 };
