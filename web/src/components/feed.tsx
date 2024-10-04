@@ -1,5 +1,4 @@
-"use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Post } from "./post";
 import { Button } from "./ui/button";
 import Link from "next/link";
