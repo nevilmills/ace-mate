@@ -81,7 +81,7 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({ setCourse }) => {
               className="w-full justify-between"
             >
               {value
-                ? courses.find((framework) => framework.value === value)?.label
+                ? courses.find((course) => course.value === value)?.label
                 : "Choose golf course..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -90,12 +90,12 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({ setCourse }) => {
             <Command>
               <CommandInput placeholder="Search courses..." />
               <CommandList>
-                <CommandEmpty>No framework found.</CommandEmpty>
+                <CommandEmpty>No course found.</CommandEmpty>
                 <CommandGroup>
-                  {courses.map((framework) => (
+                  {courses.map((course) => (
                     <CommandItem
-                      key={framework.value}
-                      value={framework.value}
+                      key={course.value}
+                      value={course.value}
                       onSelect={(currentValue) => {
                         setValue(currentValue === value ? "" : currentValue);
                         setOpen(false);
@@ -104,12 +104,10 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({ setCourse }) => {
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === framework.value
-                            ? "opacity-100"
-                            : "opacity-0"
+                          value === course.value ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {framework.label}
+                      {course.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
