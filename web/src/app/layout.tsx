@@ -1,15 +1,10 @@
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
+import { NavBar } from "@/components/nav-bar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -51,23 +46,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <header className="p-4 px-12 text-primary fixed w-screen h-[68px]">
-              <nav className="flex flex-row justify-between">
-                <div>
-                  <a href="/" className="text-lg font-bold">
-                    Golf Companion
-                  </a>
-                </div>
-                <div>
-                  <SignedIn>
-                    <UserButton />
-                  </SignedIn>
-                  <SignedOut>
-                    <SignInButton />
-                  </SignedOut>
-                </div>
-              </nav>
-            </header>
+            <NavBar />
             <div className="grow flex flex-col pt-[68px]">{children}</div>
           </ThemeProvider>
         </body>
