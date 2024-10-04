@@ -1,4 +1,4 @@
-import { PostCreator } from "@/components/post-creator";
+import { PostCreator } from "@/components/post-creator/post-creator";
 import React from "react";
 
 const page: React.FC = () => {
