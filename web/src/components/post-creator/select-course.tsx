@@ -24,10 +24,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CourseSelection } from "@/lib/types";
+import { CourseSelection, PostCreatorMenu } from "@/lib/types";
 
 interface SelectCourseProps {
   setCourse: React.Dispatch<React.SetStateAction<CourseSelection>>;
+  setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
 }
 
 const courses = [
@@ -57,13 +58,22 @@ const courses = [
   },
 ];
 
-export const SelectCourse: React.FC<SelectCourseProps> = ({ setCourse }) => {
+export const SelectCourse: React.FC<SelectCourseProps> = ({
+  setCourse,
+  setCurrentMenu,
+}) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<CourseSelection>(null);
 
   const handleSubmit = () => {
     if (!value) return;
+
     setCourse(value);
+    setCurrentMenu("tees");
+  };
+
+  const handleBackPress = () => {
+    setCurrentMenu("date");
   };
 
   return (
@@ -117,8 +127,8 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({ setCourse }) => {
         </Popover>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button asChild variant={"outline"}>
-          <Link href="/">Cancel</Link>
+        <Button variant={"outline"} onClick={handleBackPress}>
+          Cancel
         </Button>
         <Button className="font-semibold" onClick={handleSubmit}>
           Next
