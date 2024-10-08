@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 import React, { useState } from "react";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,7 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CourseSelection, PostCreatorMenu } from "@/lib/types";
+import { PostCreatorMenu } from "@/lib/types";
 
 interface SelectTeesProps {
   tees: string;
@@ -64,6 +63,8 @@ export const SelectTees: React.FC<SelectTeesProps> = ({
 
   const handleSubmit = () => {
     if (!tees) return;
+
+    setCurrentMenu("score");
   };
 
   const handleBackPress = () => {

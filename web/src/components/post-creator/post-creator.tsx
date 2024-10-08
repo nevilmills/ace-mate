@@ -4,6 +4,7 @@ import { SelectCourse } from "./select-course";
 import { CourseSelection, PostCreatorMenu } from "@/lib/types";
 import { SelectTees } from "./select-tees";
 import { SelectDate } from "./select-date";
+import { SelectScore } from "./select-score";
 
 interface PostCreatorProps {}
 
@@ -11,7 +12,13 @@ export const PostCreator: React.FC<PostCreatorProps> = ({}) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
   const [course, setCourse] = useState<string>("");
   const [tees, setTees] = useState<string>("");
+  const [score, setScore] = useState<number | undefined>(undefined);
   const [currentMenu, setCurrentMenu] = useState<PostCreatorMenu>("date");
+
+  const createPost = async () => {
+    console.log({ date, course, tees });
+    // need to validate the inputs and submit.
+  };
 
   if (currentMenu === "date") {
     return (
@@ -33,7 +40,7 @@ export const PostCreator: React.FC<PostCreatorProps> = ({}) => {
         />
       </div>
     );
-  } else
+  } else if (currentMenu === "tees")
     return (
       <div>
         <SelectTees
@@ -43,4 +50,16 @@ export const PostCreator: React.FC<PostCreatorProps> = ({}) => {
         />
       </div>
     );
+  else {
+    return (
+      <div>
+        <SelectScore
+          score={score}
+          setScore={setScore}
+          setCurrentMenu={setCurrentMenu}
+          createPost={createPost}
+        />
+      </div>
+    );
+  }
 };
