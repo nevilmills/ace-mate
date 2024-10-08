@@ -8,25 +8,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { Calendar } from "../ui/calendar";
 import { PostCreatorMenu } from "@/lib/types";
 
 interface SelectDateProps {
+  date: Date | undefined;
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
   setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
 }
 
 export const SelectDate: React.FC<SelectDateProps> = ({
+  date,
   setDate,
   setCurrentMenu,
 }) => {
-  const [value, setValue] = useState<Date | undefined>(new Date());
-
   const handleSubmit = () => {
-    if (!value) return;
+    if (!date) return;
 
-    setDate(value);
     setCurrentMenu("course");
   };
 
@@ -38,8 +37,8 @@ export const SelectDate: React.FC<SelectDateProps> = ({
       <CardContent>
         <Calendar
           mode="single"
-          selected={value}
-          onSelect={setValue}
+          selected={date}
+          onSelect={setDate}
           className="rounded-md border"
         />
       </CardContent>

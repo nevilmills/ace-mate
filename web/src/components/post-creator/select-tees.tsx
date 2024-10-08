@@ -27,11 +27,12 @@ import {
 import { CourseSelection, PostCreatorMenu } from "@/lib/types";
 
 interface SelectTeesProps {
-  setTees: React.Dispatch<React.SetStateAction<CourseSelection>>;
+  tees: string;
+  setTees: React.Dispatch<React.SetStateAction<string>>;
   setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
 }
 
-const tees = [
+const teeBoxes = [
   {
     value: "Gold",
     label: "Gold",
@@ -55,15 +56,14 @@ const tees = [
 ];
 
 export const SelectTees: React.FC<SelectTeesProps> = ({
+  tees,
   setTees,
   setCurrentMenu,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<CourseSelection>(null);
 
   const handleSubmit = () => {
-    if (!value) return;
-    setTees(value);
+    if (!tees) return;
   };
 
   const handleBackPress = () => {
@@ -84,8 +84,8 @@ export const SelectTees: React.FC<SelectTeesProps> = ({
               aria-expanded={open}
               className="w-full justify-between"
             >
-              {value
-                ? tees.find((framework) => framework.value === value)?.label
+              {tees
+                ? teeBoxes.find((teeBox) => teeBox.value === tees)?.label
                 : "Choose tees..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -96,24 +96,22 @@ export const SelectTees: React.FC<SelectTeesProps> = ({
               <CommandList>
                 <CommandEmpty>No tees found.</CommandEmpty>
                 <CommandGroup>
-                  {tees.map((framework) => (
+                  {teeBoxes.map((teeBox) => (
                     <CommandItem
-                      key={framework.value}
-                      value={framework.value}
+                      key={teeBox.value}
+                      value={teeBox.value}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
+                        setTees(currentValue === tees ? "" : currentValue);
                         setOpen(false);
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === framework.value
-                            ? "opacity-100"
-                            : "opacity-0"
+                          tees === teeBox.value ? "opacity-100" : "opacity-0"
                         )}
                       />
-                      {framework.label}
+                      {teeBox.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -124,7 +122,7 @@ export const SelectTees: React.FC<SelectTeesProps> = ({
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant={"outline"} onClick={handleBackPress}>
-          Cancel
+          Back
         </Button>
         <Button className="font-semibold" onClick={handleSubmit}>
           Next

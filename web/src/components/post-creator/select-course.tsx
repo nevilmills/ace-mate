@@ -24,12 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { CourseSelection, PostCreatorMenu } from "@/lib/types";
-
-interface SelectCourseProps {
-  setCourse: React.Dispatch<React.SetStateAction<CourseSelection>>;
-  setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
-}
+import { PostCreatorMenu } from "@/lib/types";
 
 const courses = [
   {
@@ -58,17 +53,22 @@ const courses = [
   },
 ];
 
+interface SelectCourseProps {
+  course: string;
+  setCourse: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
+}
+
 export const SelectCourse: React.FC<SelectCourseProps> = ({
+  course,
   setCourse,
   setCurrentMenu,
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<CourseSelection>(null);
 
   const handleSubmit = () => {
-    if (!value) return;
+    if (!course) return;
 
-    setCourse(value);
     setCurrentMenu("tees");
   };
 
@@ -90,8 +90,8 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               aria-expanded={open}
               className="w-full justify-between"
             >
-              {value
-                ? courses.find((course) => course.value === value)?.label
+              {course
+                ? courses.find((courseObj) => courseObj.value === course)?.label
                 : "Choose golf course..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -102,22 +102,24 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               <CommandList>
                 <CommandEmpty>No course found.</CommandEmpty>
                 <CommandGroup>
-                  {courses.map((course) => (
+                  {courses.map((courseObj) => (
                     <CommandItem
-                      key={course.value}
-                      value={course.value}
+                      key={courseObj.value}
+                      value={courseObj.value}
                       onSelect={(currentValue) => {
-                        setValue(currentValue === value ? "" : currentValue);
+                        setCourse(currentValue === course ? "" : currentValue);
                         setOpen(false);
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value === course.value ? "opacity-100" : "opacity-0"
+                          course === courseObj.value
+                            ? "opacity-100"
+                            : "opacity-0"
                         )}
                       />
-                      {course.label}
+                      {courseObj.label}
                     </CommandItem>
                   ))}
                 </CommandGroup>
@@ -128,7 +130,7 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant={"outline"} onClick={handleBackPress}>
-          Cancel
+          Back
         </Button>
         <Button className="font-semibold" onClick={handleSubmit}>
           Next

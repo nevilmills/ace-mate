@@ -9,26 +9,38 @@ interface PostCreatorProps {}
 
 export const PostCreator: React.FC<PostCreatorProps> = ({}) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [course, setCourse] = useState<CourseSelection>(null);
-  const [tees, setTees] = useState<string | null>(null);
+  const [course, setCourse] = useState<string>("");
+  const [tees, setTees] = useState<string>("");
   const [currentMenu, setCurrentMenu] = useState<PostCreatorMenu>("date");
 
   if (currentMenu === "date") {
     return (
       <div>
-        <SelectDate setDate={setDate} setCurrentMenu={setCurrentMenu} />
+        <SelectDate
+          date={date}
+          setDate={setDate}
+          setCurrentMenu={setCurrentMenu}
+        />
       </div>
     );
   } else if (currentMenu === "course") {
     return (
       <div>
-        <SelectCourse setCourse={setCourse} setCurrentMenu={setCurrentMenu} />
+        <SelectCourse
+          course={course}
+          setCourse={setCourse}
+          setCurrentMenu={setCurrentMenu}
+        />
       </div>
     );
   } else
     return (
       <div>
-        <SelectTees setTees={setTees} setCurrentMenu={setCurrentMenu} />
+        <SelectTees
+          tees={tees}
+          setTees={setTees}
+          setCurrentMenu={setCurrentMenu}
+        />
       </div>
     );
 };
