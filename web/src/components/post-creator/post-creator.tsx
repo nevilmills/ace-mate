@@ -16,7 +16,7 @@ export const PostCreator: React.FC<PostCreatorProps> = ({}) => {
   const [currentMenu, setCurrentMenu] = useState<PostCreatorMenu>("date");
 
   const createPost = async () => {
-    console.log({ date, course, tees });
+    console.log({ date, course, tees, score });
     // need to validate the inputs and submit.
   };
 

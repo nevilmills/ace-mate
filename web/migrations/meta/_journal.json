@@ -15,6 +15,13 @@
       "when": 1727050128663,
       "tag": "0001_spooky_aqueduct",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1731887791934,
+      "tag": "0002_chemical_stryfe",
+      "breakpoints": true
     }
   ]
 }
