@@ -1,10 +1,10 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import { decimal } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(), // same as clerk id
   username: text("name").notNull(),
-  password: text("password").notNull(),
-  email: text("email").notNull().unique(),
+  handicap: decimal("handicap", { precision: 2, scale: 1 }),
 });
 
 export const golf_course = pgTable("golf_course", {
