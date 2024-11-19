@@ -15,8 +15,8 @@ export const Feed: React.FC<feedProps> = ({}) => {
         </Button>
       </div>
       <Post title="Hello world" />
-      <Post title="Dude I just shot a 79" />
-      <Post title="Is it even worth it bro" />
+      <Post title="Another post" />
+      <Post title="three poosts" />
     </div>
   );
 };
