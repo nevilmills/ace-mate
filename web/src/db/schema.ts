@@ -4,7 +4,7 @@ import { decimal } from "drizzle-orm/pg-core";
 export const user = pgTable("user", {
   id: text("id").primaryKey(), // same as clerk id
   username: text("name").notNull(),
-  handicap: decimal("handicap", { precision: 3, scale: 1 }),
+  posts: integer("posts").array().default([]),
 });
 
 export const golf_course = pgTable("golf_course", {
