@@ -22,6 +22,20 @@
       "when": 1731887791934,
       "tag": "0002_chemical_stryfe",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1731977493293,
+      "tag": "0003_yellow_thor_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1731977769118,
+      "tag": "0004_quick_iron_monger",
+      "breakpoints": true
     }
   ]
 }

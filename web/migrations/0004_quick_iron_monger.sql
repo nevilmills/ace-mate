@@ -1,0 +1,1 @@
+ALTER TABLE "user" ALTER COLUMN "handicap" SET DATA TYPE numeric(3, 1);
