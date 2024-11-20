@@ -25,7 +25,7 @@ export const Feed: React.FC<feedProps> = async ({}) => {
         </Button>
       </div>
       {posts.map((post) => (
-        <Post post={post} />
+        <Post key={post.id} post={post} />
       ))}
     </div>
   );
