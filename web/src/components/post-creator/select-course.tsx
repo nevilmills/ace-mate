@@ -29,8 +29,8 @@ import { GolfCourse } from "@/db/schema";
 
 interface SelectCourseProps {
   golfCourses: GolfCourse[];
-  course: string | undefined;
-  setCourse: React.Dispatch<React.SetStateAction<string | undefined>>;
+  course: GolfCourse | undefined;
+  setCourse: React.Dispatch<React.SetStateAction<GolfCourse | undefined>>;
   setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
 }
 
@@ -67,8 +67,9 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               className="w-full justify-between"
             >
               {course
-                ? golfCourses.find((courseObj) => courseObj.name === course)
-                    ?.name
+                ? golfCourses.find(
+                    (golfCourse) => golfCourse.name === course.name
+                  )?.name
                 : "Choose golf course..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -79,13 +80,13 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               <CommandList>
                 <CommandEmpty>No course found.</CommandEmpty>
                 <CommandGroup>
-                  {golfCourses.map((courseObj) => (
+                  {golfCourses.map((golfCourse) => (
                     <CommandItem
-                      key={courseObj.id}
-                      value={courseObj.name}
+                      key={golfCourse.name}
+                      value={golfCourse.name}
                       onSelect={(currentValue) => {
                         setCourse(
-                          currentValue === course ? undefined : currentValue
+                          currentValue === course?.name ? undefined : golfCourse
                         );
                         setOpen(false);
                       }}
@@ -93,12 +94,12 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          course === courseObj.name
+                          course?.name === golfCourse.name
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {courseObj.name}
+                      {golfCourse.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>

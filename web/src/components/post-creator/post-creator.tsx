@@ -7,6 +7,7 @@ import { SelectDate } from "./select-date";
 import { SelectScore } from "./select-score";
 import { useAuth } from "@clerk/nextjs";
 import { GolfCourse } from "@/db/schema";
+import { createPost } from "@/db/queries/post/insert";
 
 interface PostCreatorProps {
   golfCourses: GolfCourse[];
@@ -14,20 +15,27 @@ interface PostCreatorProps {
 
 export const PostCreator: React.FC<PostCreatorProps> = ({ golfCourses }) => {
   const [date, setDate] = useState<Date | undefined>(undefined);
-  const [course, setCourse] = useState<string | undefined>(undefined);
+  const [course, setCourse] = useState<GolfCourse | undefined>(undefined);
   const [tees, setTees] = useState<string>("");
   const [score, setScore] = useState<number | undefined>(undefined);
   const [currentMenu, setCurrentMenu] = useState<PostCreatorMenu>("date");
+  const { userId } = useAuth();
 
   const submitPost = async () => {
-    console.log({ date, course, tees, score });
+    if (!date || !course || !tees || !score) return;
+    console.log({ date, courseId: course?.id, tees, score });
     // need to validate the inputs and submit.
 
-    const { userId } = useAuth();
     if (!userId) throw new Error("User not found");
 
     // create the post
-    // createPost({userId, date: date!, golfCourseId: course.id, score: score!, tees});
+    createPost({
+      userId,
+      date,
+      golfCourseId: course.id,
+      score,
+      tees,
+    });
   };
 
   if (currentMenu === "date") {
