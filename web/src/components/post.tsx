@@ -1,15 +1,16 @@
 import React from "react";
 import { Card, CardHeader, CardTitle } from "./ui/card";
+import { ExistingPost } from "@/db/schema";
 
 interface postProps {
-  title: string;
+  post: ExistingPost;
 }
 
-export const Post: React.FC<postProps> = ({ title }) => {
+export const Post: React.FC<postProps> = ({ post }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>{post.score}</CardTitle>
       </CardHeader>
     </Card>
   );

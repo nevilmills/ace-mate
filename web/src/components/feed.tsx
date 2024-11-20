@@ -2,10 +2,20 @@ import React from "react";
 import { Post } from "./post";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { getPostsByUser } from "@/db/queries/post/select";
 
 interface feedProps {}
 
-export const Feed: React.FC<feedProps> = ({}) => {
+export const Feed: React.FC<feedProps> = async ({}) => {
+  const { userId } = auth();
+
+  if (!userId) {
+    throw new Error("User not found");
+  }
+
+  const posts = await getPostsByUser(userId);
+
   return (
     <div className="w-[700px] flex flex-col space-y-4">
       <div className="w-full flex flex-row justify-between">
@@ -14,9 +24,9 @@ export const Feed: React.FC<feedProps> = ({}) => {
           <Link href="/create-post">Create Post</Link>
         </Button>
       </div>
-      <Post title="Hello world" />
-      <Post title="Another post" />
-      <Post title="three poosts" />
+      {posts.map((post) => (
+        <Post post={post} />
+      ))}
     </div>
   );
 };
