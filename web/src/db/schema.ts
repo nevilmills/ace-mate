@@ -1,10 +1,19 @@
 import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
-import { decimal } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(), // same as clerk id
   username: text("name").notNull(),
-  posts: integer("posts").array().default([]),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const post = pgTable("post", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").references(() => user.id),
+  golfCourseId: integer("golf_course_id").references(() => golf_course.id),
+  score: integer("score").notNull(),
+  tees: text("tees").notNull(),
+  date: timestamp("date").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const golf_course = pgTable("golf_course", {
@@ -16,3 +25,5 @@ export const golf_course = pgTable("golf_course", {
 export type NewUser = typeof user.$inferInsert;
 export type ExistingUser = typeof user.$inferSelect;
 export type GolfCourse = typeof golf_course.$inferSelect;
+export type NewPost = typeof post.$inferInsert;
+export type ExistingPost = typeof post.$inferSelect;

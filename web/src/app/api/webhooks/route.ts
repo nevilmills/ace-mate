@@ -59,7 +59,6 @@ export async function POST(req: Request) {
   // Handle new user data initialization
   if (evt.type === "user.created") {
     try {
-      console.log("userId:", evt.data.id);
       const user: NewUser = {
         id: evt.data.id,
         username: evt.data.username!,
