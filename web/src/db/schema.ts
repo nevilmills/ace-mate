@@ -1,9 +1,17 @@
-import { integer, pgTable, serial, text, timestamp } from "drizzle-orm/pg-core";
+import {
+  integer,
+  numeric,
+  pgTable,
+  serial,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(), // same as clerk id
   username: text("name").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  handicap: numeric("handicap", { precision: 3, scale: 1 }),
 });
 
 export const post = pgTable("post", {

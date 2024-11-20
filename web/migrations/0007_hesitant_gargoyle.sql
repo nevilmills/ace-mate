@@ -1,0 +1,1 @@
+ALTER TABLE "user" ADD COLUMN "handicap" numeric(3, 1);
