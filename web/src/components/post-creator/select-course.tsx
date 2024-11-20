@@ -25,41 +25,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { PostCreatorMenu } from "@/lib/types";
-
-const courses = [
-  {
-    value: "Chilliwack Golf Club",
-    label: "Chilliwack Golf Club",
-  },
-  {
-    value: "Royalwood Golf Course",
-    label: "Royalwood Golf Course",
-  },
-  {
-    value: "Cheam Mountain Golf Course",
-    label: "Cheam Mountain Golf Course",
-  },
-  {
-    value: "The Falls Golf Club",
-    label: "The Falls Golf Club",
-  },
-  {
-    value: "Cultus Lake Golf Club",
-    label: "Cultus Lake Golf Club",
-  },
-  {
-    value: "Kinkora Golf Course",
-    label: "Kinkora Golf Course",
-  },
-];
+import { GolfCourse } from "@/db/schema";
 
 interface SelectCourseProps {
-  course: string;
-  setCourse: React.Dispatch<React.SetStateAction<string>>;
+  golfCourses: GolfCourse[];
+  course: string | undefined;
+  setCourse: React.Dispatch<React.SetStateAction<string | undefined>>;
   setCurrentMenu: React.Dispatch<React.SetStateAction<PostCreatorMenu>>;
 }
 
 export const SelectCourse: React.FC<SelectCourseProps> = ({
+  golfCourses,
   course,
   setCourse,
   setCurrentMenu,
@@ -91,7 +67,8 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               className="w-full justify-between"
             >
               {course
-                ? courses.find((courseObj) => courseObj.value === course)?.label
+                ? golfCourses.find((courseObj) => courseObj.name === course)
+                    ?.name
                 : "Choose golf course..."}
               <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
             </Button>
@@ -102,24 +79,26 @@ export const SelectCourse: React.FC<SelectCourseProps> = ({
               <CommandList>
                 <CommandEmpty>No course found.</CommandEmpty>
                 <CommandGroup>
-                  {courses.map((courseObj) => (
+                  {golfCourses.map((courseObj) => (
                     <CommandItem
-                      key={courseObj.value}
-                      value={courseObj.value}
+                      key={courseObj.id}
+                      value={courseObj.name}
                       onSelect={(currentValue) => {
-                        setCourse(currentValue === course ? "" : currentValue);
+                        setCourse(
+                          currentValue === course ? undefined : currentValue
+                        );
                         setOpen(false);
                       }}
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          course === courseObj.value
+                          course === courseObj.name
                             ? "opacity-100"
                             : "opacity-0"
                         )}
                       />
-                      {courseObj.label}
+                      {courseObj.name}
                     </CommandItem>
                   ))}
                 </CommandGroup>
