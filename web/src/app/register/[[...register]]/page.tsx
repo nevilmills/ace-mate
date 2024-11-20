@@ -7,7 +7,7 @@ interface pageProps {}
 
 export const page: React.FC<pageProps> = ({}) => {
   return (
-    <div className="w-screen h-screen flex justify-center items-center">
+    <div className="w-full grow flex justify-center items-center">
       <SignUp />
     </div>
   );
