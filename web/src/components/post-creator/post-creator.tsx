@@ -8,6 +8,7 @@ import { SelectScore } from "./select-score";
 import { useAuth } from "@clerk/nextjs";
 import { GolfCourse } from "@/db/schema";
 import { createPost } from "@/db/queries/post/insert";
+import { updateHandicap } from "@/db/queries/user/update";
 
 interface PostCreatorProps {
   golfCourses: GolfCourse[];
@@ -36,6 +37,9 @@ export const PostCreator: React.FC<PostCreatorProps> = ({ golfCourses }) => {
       score,
       tees,
     });
+
+    // update user handicap
+    updateHandicap(userId);
   };
 
   if (currentMenu === "date") {
