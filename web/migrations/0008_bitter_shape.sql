@@ -1,0 +1,1 @@
+ALTER TABLE "post" ALTER COLUMN "golf_course_id" SET NOT NULL;

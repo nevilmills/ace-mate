@@ -17,7 +17,9 @@ export const user = pgTable("user", {
 export const post = pgTable("post", {
   id: serial("id").primaryKey(),
   userId: text("user_id").references(() => user.id),
-  golfCourseId: integer("golf_course_id").references(() => golf_course.id),
+  golfCourseId: integer("golf_course_id")
+    .references(() => golf_course.id)
+    .notNull(),
   score: integer("score").notNull(),
   tees: text("tees").notNull(),
   date: timestamp("date").notNull(),
