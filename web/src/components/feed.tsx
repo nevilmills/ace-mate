@@ -3,7 +3,7 @@ import { Post } from "./post";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
-import { getPostsByUser } from "@/db/queries/post/select";
+import { getPostsByUserWithCourse } from "@/db/queries/post/select";
 
 interface feedProps {}
 
@@ -14,7 +14,7 @@ export const Feed: React.FC<feedProps> = async ({}) => {
     throw new Error("User not found");
   }
 
-  const posts = await getPostsByUser(userId);
+  const postsWithCourses = await getPostsByUserWithCourse(userId);
 
   return (
     <div className="w-[700px] flex flex-col space-y-4">
@@ -24,8 +24,8 @@ export const Feed: React.FC<feedProps> = async ({}) => {
           <Link href="/create-post">Create Post</Link>
         </Button>
       </div>
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
+      {postsWithCourses.map((item) => (
+        <Post key={item.post.id} data={item} />
       ))}
     </div>
   );
