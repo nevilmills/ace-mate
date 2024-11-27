@@ -5,15 +5,11 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { getPostsByUserWithCourse } from "@/db/queries/post/select";
 
-interface feedProps {}
+interface feedProps {
+  userId: string;
+}
 
-export const Feed: React.FC<feedProps> = async ({}) => {
-  const { userId } = auth();
-
-  if (!userId) {
-    throw new Error("User not found");
-  }
-
+export const Feed: React.FC<feedProps> = async ({ userId }) => {
   const postsWithCourses = await getPostsByUserWithCourse(userId);
 
   return (
