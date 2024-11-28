@@ -10,9 +10,10 @@ export default async function Home() {
   }
 
   return (
-    <div className="px-12 py-8 flex flex-row justify-center">
+    <div className="px-12 py-8 flex flex-row justify-evenly ">
       <MostPlayed userId={userId} />
       <Feed userId={userId} />
+      <div />
     </div>
   );
 }
