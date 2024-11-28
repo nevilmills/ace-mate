@@ -11,7 +11,7 @@ export const getPostsByUserWithCourse = async (userId: string) => {
     .where(eq(post.userId, userId))
     .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id))
     .orderBy(desc(post.createdAt));
-  // console.log(posts);
+
   return posts;
 };
 
