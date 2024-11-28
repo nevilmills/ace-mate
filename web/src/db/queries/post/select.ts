@@ -22,7 +22,8 @@ export const getRoundsPlayedCountsByUser = async (userId: string) => {
     .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id))
     .where(eq(post.userId, userId))
     .groupBy(golf_course.name)
-    .orderBy(desc(count(post.id)));
+    .orderBy(desc(count(post.id)))
+    .limit(5);
 
   return roundsPlayed;
 };
