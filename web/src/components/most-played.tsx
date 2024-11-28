@@ -29,7 +29,9 @@ export const MostPlayed: React.FC<MostPlayedProps> = async ({ userId }) => {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold pl-6">Most Played Courses</h3>
+      <div className="h-[40px]">
+        <h3 className="text-2xl font-bold pl-6">Most Played Courses</h3>
+      </div>
       <div className="h-4" />
 
       <Card className="min-w-[320px] flex items-center justify-center">
