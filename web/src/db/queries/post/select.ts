@@ -9,7 +9,8 @@ export const getPostsByUserWithCourse = async (userId: string) => {
     .select()
     .from(post)
     .where(eq(post.userId, userId))
-    .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id));
+    .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id))
+    .orderBy(desc(post.createdAt));
   // console.log(posts);
   return posts;
 };
