@@ -22,11 +22,11 @@ export const Profile: React.FC<ProfileProps> = async ({}) => {
         </div>
         <div className="flex flex-col">
           <span className="font-semibold">{user?.username}</span>
-          <span className="text-sm text-[#A1A1AA]">HCP: 9.8</span>
+          <span className="text-sm text-muted-foreground">HCP: 9.8</span>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-[#A1A1AA]">
+        <p className="text-muted-foreground">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
