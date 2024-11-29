@@ -1,17 +1,9 @@
 import { getRoundsPlayedCountsByUser } from "@/db/queries/post/select";
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -45,7 +37,7 @@ export const MostPlayed: React.FC<MostPlayedProps> = async ({ userId }) => {
             </TableHeader>
             <TableBody>
               {data.map((item) => (
-                <TableRow>
+                <TableRow key={item.value}>
                   <TableCell className="font-medium">{item.value}</TableCell>
                   <TableCell className="text-right">{item.count}</TableCell>
                 </TableRow>
