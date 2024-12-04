@@ -1,7 +1,9 @@
+import { sql } from "drizzle-orm";
 import {
   integer,
   numeric,
   pgTable,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -13,6 +15,21 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   handicap: numeric("handicap", { precision: 3, scale: 1 }),
 });
+
+export const userFriends = pgTable(
+  "user_friends",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
+    friendId: text("friend_id")
+      .notNull()
+      .references(() => user.id),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.friendId] }),
+  })
+);
 
 export const post = pgTable("post", {
   id: serial("id").primaryKey(),
