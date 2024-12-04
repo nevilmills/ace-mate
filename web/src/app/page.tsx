@@ -1,4 +1,5 @@
 import { Feed } from "@/components/feed";
+import { FriendsList } from "@/components/friends-list";
 import { MostPlayed } from "@/components/most-played";
 import { Profile } from "@/components/profile";
 import { auth } from "@clerk/nextjs/server";
@@ -12,6 +13,7 @@ export default async function Home() {
 
   return (
     <div className="px-12 py-8 flex flex-row justify-evenly ">
+      <FriendsList />
       <Feed userId={userId} />
       <div className="flex flex-col space-y-8">
         <div className="h-[24px]" />
