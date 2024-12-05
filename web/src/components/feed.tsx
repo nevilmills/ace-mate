@@ -13,7 +13,7 @@ export const Feed: React.FC<feedProps> = async ({ userId }) => {
   const postsWithCourses = await getPostsByUserWithCourse(userId);
 
   return (
-    <div className="w-[700px] flex flex-col space-y-4">
+    <div className="w-[750px] flex flex-col space-y-4">
       <div className="w-full flex flex-row justify-between">
         <h3 className="text-2xl font-bold pl-6">Your feed</h3>
         <Button asChild className="text-md font-semibold">

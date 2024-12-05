@@ -34,8 +34,8 @@ export const Post: React.FC<postProps> = async ({ data }) => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="rounded-lg h-40 bg-[#0a0a0a] flex flex-col p-4 space-y-2">
-          <span className="text-[42px] font-bold text-primary">
+        <div className="rounded-lg h-36 bg-[#0a0a0a] flex flex-col p-4 space-y-2 justify-center">
+          <span className="text-[42px] font-bold text-primary h-[50px] flex items-center">
             {data.post.score}
           </span>
           <div className="h-1 w-6 bg-white" />
