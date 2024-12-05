@@ -19,7 +19,14 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
         </div>
         <div>
           <SignedIn>
-            <UserButton />
+            <UserButton
+              showName
+              appearance={{
+                elements: {
+                  userButtonAvatarBox: "h-8 w-8",
+                },
+              }}
+            />
           </SignedIn>
           <SignedOut>
             <SignInButton />
