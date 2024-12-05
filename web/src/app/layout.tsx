@@ -47,7 +47,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <NavBar />
-            <div className="grow flex flex-col pt-[68px]">{children}</div>
+            <div className="grow flex flex-col pt-[92px]">{children}</div>
           </ThemeProvider>
         </body>
       </html>
