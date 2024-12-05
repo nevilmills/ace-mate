@@ -101,7 +101,7 @@ body {
 .cl-alert,
 .cl-phoneInputBox,
 .cl-userButtonPopoverCard {
-  @apply rounded-lg border border-input bg-background;
+  @apply rounded-lg border border-input bg-[#0a0a0a];
 }
 
 .cl-headerTitle,
