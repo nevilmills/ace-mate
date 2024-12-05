@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import { user, golf_course, post } from "@/db/schema";
+import { user, golf_course, post, ExistingUser, NewUser } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
 
 export const updateHandicap = async (userId: string) => {
@@ -34,4 +34,8 @@ export const updateHandicap = async (userId: string) => {
     .update(user)
     .set({ handicap: average.toString() })
     .where(eq(user.id, userId));
+};
+
+export const updateUser = async (userData: NewUser) => {
+  await db.update(user).set(userData).where(eq(user.id, userData.id));
 };

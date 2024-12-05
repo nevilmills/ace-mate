@@ -1,8 +1,9 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { NewUser } from "@/db/schema";
+import { ExistingUser, NewUser } from "@/db/schema";
 import { createUser } from "@/db/queries/user/insert";
+import { updateUser } from "@/db/queries/user/update";
 
 export async function POST(req: Request) {
   const SIGNING_SECRET = process.env.SIGNING_SECRET;
@@ -62,11 +63,27 @@ export async function POST(req: Request) {
       const user: NewUser = {
         id: evt.data.id,
         username: evt.data.username!,
+        imageUrl: evt.data.image_url,
       };
 
       createUser(user);
     } catch (err) {
       console.error("Error: Could not create new user:", err);
+    }
+  }
+
+  // Sync data with Clerk when user updates their profile
+  if (evt.type === "user.updated") {
+    try {
+      const user: NewUser = {
+        id: evt.data.id,
+        username: evt.data.username!,
+        imageUrl: evt.data.image_url,
+      };
+
+      updateUser(user);
+    } catch (err) {
+      console.error("Error: Could not update user:", err);
     }
   }
 
