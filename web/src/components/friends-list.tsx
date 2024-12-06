@@ -9,6 +9,7 @@ import {
 } from "./ui/card";
 import { Person } from "./person";
 import { Button } from "./ui/button";
+import { AddFriendButton } from "./add-friend/add-friend-button";
 
 interface FriendsListProps {}
 
@@ -34,9 +35,7 @@ export const FriendsList: React.FC<FriendsListProps> = ({}) => {
       </span>
       <div className="h-8" />
       <div>
-        <Button size="sm" className="font-bold">
-          + Add friend
-        </Button>
+        <AddFriendButton />
       </div>
     </div>
   );
