@@ -78,6 +78,13 @@
       "when": 1733370767972,
       "tag": "0010_old_stryfe",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1733595342115,
+      "tag": "0011_far_hellfire_club",
+      "breakpoints": true
     }
   ]
 }
