@@ -12,13 +12,20 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { getUserSuggestions } from "@/db/queries/user/select";
+import { UserCard } from "./user-card";
 
 interface AddFriendButtonProps {}
 
 export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
+  const [golfers, setGolfers] = useState<any[]>([]);
+
   const fetchGolfers = async (partialUsername: string) => {
-    const golfers = await getUserSuggestions(partialUsername);
-    console.log("golfers: ", golfers);
+    // if (partialUsername.length < 3) {
+    //   setGolfers([]);
+    //   return;
+    // }
+    const data = await getUserSuggestions(partialUsername);
+    setGolfers(data);
   };
 
   const debounce = (fn: Function, ms = 300) => {
@@ -47,7 +54,13 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
           <div className="flex items-center justify-center h-28 p-8">
             <Input onChange={handleChange} placeholder="Find golfers" />
           </div>
-          <div className="bg-[#0a0a0a] grow"></div>
+          <div className="bg-[#0a0a0a] grow p-8 px-16 space-y-4">
+            {golfers.length > 0
+              ? golfers.map((golfer) => (
+                  <UserCard key={golfer.id} data={golfer} />
+                ))
+              : null}
+          </div>
         </div>
       </DialogContent>
     </Dialog>
