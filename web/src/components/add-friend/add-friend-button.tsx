@@ -13,6 +13,7 @@ import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { getUserSuggestions } from "@/db/queries/user/select";
 import { UserCard } from "./user-card";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface AddFriendButtonProps {}
 
@@ -49,19 +50,19 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
           + Add friend
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-card max-w-[900px] h-[600px] p-0 overflow-hidden">
-        <div className="w-full h-full flex flex-col">
-          <div className="flex items-center justify-center h-28 p-8">
+      <DialogContent className="bg-[#0a0a0a] max-w-[900px] h-[600px] p-0 overflow-hidden">
+        <ScrollArea className="w-full h-full flex flex-col">
+          <div className="flex items-center justify-center h-28 p-8 sticky top-0 bg-card border-b-[1px] border-[rgb(41 37 36)]">
             <Input onChange={handleChange} placeholder="Find golfers" />
           </div>
-          <div className="bg-[#0a0a0a] grow p-8 px-16 space-y-4">
+          <div className="grow p-8 px-16 space-y-4">
             {golfers.length > 0
               ? golfers.map((golfer) => (
                   <UserCard key={golfer.id} data={golfer} />
                 ))
               : null}
           </div>
-        </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
