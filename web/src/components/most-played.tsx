@@ -17,8 +17,6 @@ interface MostPlayedProps {
 export const MostPlayed: React.FC<MostPlayedProps> = async ({ userId }) => {
   const data = await getRoundsPlayedCountsByUser(userId);
 
-  console.log("Rounds played: ", data);
-
   return (
     <div>
       <div className="h-[40px]">
