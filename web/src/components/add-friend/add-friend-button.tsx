@@ -58,7 +58,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
           <div className="grow p-8 px-16 space-y-4">
             {golfers.length > 0
               ? golfers.map((golfer) => (
-                  <UserCard key={golfer.id} data={golfer} />
+                  <UserCard key={golfer.id} user={golfer} />
                 ))
               : null}
           </div>
