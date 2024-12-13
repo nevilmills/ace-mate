@@ -11,7 +11,7 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Search } from "lucide-react";
-import { getUserSuggestions } from "@/db/queries/user/select";
+import { getUserAutocompletion } from "@/db/queries/user/select";
 import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
 
@@ -25,7 +25,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
     //   setGolfers([]);
     //   return;
     // }
-    const data = await getUserSuggestions(partialUsername);
+    const data = await getUserAutocompletion(partialUsername);
     setGolfers(data);
   };
 
