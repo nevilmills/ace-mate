@@ -13,7 +13,7 @@ export default async function Home() {
 
   return (
     <div className="px-12 py-8 flex flex-row justify-evenly ">
-      <FriendsList />
+      <FriendsList userId={userId} />
       <Feed userId={userId} />
       <div className="flex flex-col space-y-8">
         <div className="h-[24px]" />
