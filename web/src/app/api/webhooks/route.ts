@@ -63,7 +63,7 @@ export async function POST(req: Request) {
       const user: NewUser = {
         id: evt.data.id,
         username: evt.data.username!,
-        imageUrl: evt.data.image_url,
+        imageUrl: "https://robohash.org/" + evt.data.id,
       };
 
       createUser(user);
@@ -78,7 +78,7 @@ export async function POST(req: Request) {
       const user: NewUser = {
         id: evt.data.id,
         username: evt.data.username!,
-        imageUrl: evt.data.image_url,
+        imageUrl: "https://robohash.org/" + evt.data.id,
       };
 
       updateUser(user);
