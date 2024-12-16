@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { ExistingPost, GolfCourse } from "@/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
+import { getUserById } from "@/db/queries/user/select";
 
 interface postProps {
   data: { post: ExistingPost; golf_course: GolfCourse };
@@ -10,6 +11,7 @@ interface postProps {
 
 export const Post: React.FC<postProps> = async ({ data }) => {
   const user = await currentUser();
+  const { imageUrl } = await getUserById(user!.id);
 
   return (
     <Card>
@@ -17,7 +19,7 @@ export const Post: React.FC<postProps> = async ({ data }) => {
         <div className="flex space-x-4 items-center">
           <div className="rounded-full overflow-hidden">
             <Image
-              src={user?.imageUrl || ""}
+              src={imageUrl || ""}
               width={30}
               height={30}
               alt="Profile Picture"

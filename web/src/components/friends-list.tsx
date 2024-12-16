@@ -37,9 +37,7 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
       <div className="h-8" />
       <div className="flex flex-col space-y-4">
         {friends.length > 0 ? (
-          friends.map((friend) => (
-            <Person key={friend.id} username={friend.username} />
-          ))
+          friends.map((friend) => <Person key={friend.id} user={friend} />)
         ) : (
           <>
             <span className="font-semibold text-muted-foreground text-center">
