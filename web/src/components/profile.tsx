@@ -3,18 +3,20 @@ import React from "react";
 import { Card, CardHeader, CardContent } from "./ui/card";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
+import { getUserById } from "@/db/queries/user/select";
 
 interface ProfileProps {}
 
 export const Profile: React.FC<ProfileProps> = async ({}) => {
   const user = await currentUser();
+  const { imageUrl } = await getUserById(user!.id);
 
   return (
     <Card className="max-w-[380px]">
       <CardHeader className="flex flex-row space-x-4">
         <div className="rounded-full overflow-hidden">
           <Image
-            src={user?.imageUrl || ""}
+            src={imageUrl || ""}
             width={60}
             height={60}
             alt="Profile Picture"

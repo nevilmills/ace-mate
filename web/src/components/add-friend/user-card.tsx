@@ -12,6 +12,7 @@ interface UserCardProps {
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const { userId } = useAuth();
+  console.log(user.imageUrl);
 
   /**
    * Once you've fetched the users list of friends in a parent component,
@@ -21,7 +22,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
   return (
     <Card className="h-32 flex p-4 px-8 items-center">
-      <div className="rounded-full overflow-hidden flex items-center justify-center bg-blue-400 h-[90px] w-[90px]">
+      <div className="rounded-full overflow-hidden flex items-center justify-center h-[90px] w-[90px]">
         <Image
           src={user.imageUrl || ""}
           width={90}
