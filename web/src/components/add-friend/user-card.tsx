@@ -12,7 +12,6 @@ interface UserCardProps {
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
   const { userId } = useAuth();
-  console.log(user.imageUrl);
 
   /**
    * Once you've fetched the users list of friends in a parent component,

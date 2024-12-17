@@ -14,11 +14,21 @@ import { Search } from "lucide-react";
 import { getUserAutocompletion } from "@/db/queries/user/select";
 import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
+import { useAuth } from "@clerk/nextjs";
 
 interface AddFriendButtonProps {}
 
 export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
-  const [golfers, setGolfers] = useState<any[]>([]);
+  const { userId } = useAuth();
+  const [golfers, setGolfers] = useState<
+    {
+      id: string;
+      username: string;
+      createdAt: Date;
+      handicap: string | null;
+      imageUrl: string;
+    }[]
+  >([]);
 
   const fetchGolfers = async (partialUsername: string) => {
     // if (partialUsername.length < 3) {
@@ -26,7 +36,10 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
     //   return;
     // }
     const data = await getUserAutocompletion(partialUsername);
-    setGolfers(data);
+
+    // remove current user from list
+    const filtered = data.filter((golfer) => golfer.id !== userId);
+    setGolfers(filtered);
   };
 
   const debounce = (fn: Function, ms = 300) => {
