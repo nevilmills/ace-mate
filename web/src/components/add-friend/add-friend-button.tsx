@@ -1,34 +1,23 @@
 "use client";
 import React, { useCallback, useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { Search } from "lucide-react";
 import { getUserAutocompletion } from "@/db/queries/user/select";
 import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useAuth } from "@clerk/nextjs";
+import { ExistingUser } from "@/db/schema";
 
-interface AddFriendButtonProps {}
+interface AddFriendButtonProps {
+  friends: Record<string, boolean>;
+}
 
-export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
+export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
+  friends,
+}) => {
   const { userId } = useAuth();
-  const [golfers, setGolfers] = useState<
-    {
-      id: string;
-      username: string;
-      createdAt: Date;
-      handicap: string | null;
-      imageUrl: string;
-    }[]
-  >([]);
+  const [golfers, setGolfers] = useState<ExistingUser[]>([]);
 
   const fetchGolfers = async (partialUsername: string) => {
     // if (partialUsername.length < 3) {
@@ -70,9 +59,13 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({}) => {
           </div>
           <div className="grow p-8 px-16 space-y-4">
             {golfers.length > 0
-              ? golfers.map((golfer) => (
-                  <UserCard key={golfer.id} user={golfer} />
-                ))
+              ? golfers.map((golfer) => {
+                  if (friends[golfer.id])
+                    return (
+                      <UserCard key={golfer.id} user={golfer} added={true} />
+                    );
+                  return <UserCard key={golfer.id} user={golfer} />;
+                })
               : null}
           </div>
         </ScrollArea>

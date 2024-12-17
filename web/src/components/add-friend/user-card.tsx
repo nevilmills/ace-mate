@@ -8,9 +8,10 @@ import { createUserFriend } from "@/db/queries/user_friends/insert";
 
 interface UserCardProps {
   user: ExistingUser;
+  added?: boolean;
 }
 
-export const UserCard: React.FC<UserCardProps> = ({ user }) => {
+export const UserCard: React.FC<UserCardProps> = ({ user, added }) => {
   const { userId } = useAuth();
 
   /**
@@ -35,16 +36,29 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
       </span>
       <div className="w-8" />
       <div className="grow flex justify-end">
-        <Button
-          size="lg"
-          className="font-bold text-lg"
-          onClick={() => {
-            createUserFriend(userId!, user.id);
-            createUserFriend(user.id, userId!);
-          }}
-        >
-          Add
-        </Button>
+        {added ? (
+          <Button
+            size="lg"
+            className="font-bold text-lg"
+            onClick={() => {
+              createUserFriend(userId!, user.id);
+              createUserFriend(user.id, userId!);
+            }}
+          >
+            Un-friend
+          </Button>
+        ) : (
+          <Button
+            size="lg"
+            className="font-bold text-lg"
+            onClick={() => {
+              createUserFriend(userId!, user.id);
+              createUserFriend(user.id, userId!);
+            }}
+          >
+            Add
+          </Button>
+        )}
       </div>
     </Card>
   );
