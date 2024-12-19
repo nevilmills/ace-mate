@@ -35,6 +35,7 @@ export default function RootLayout({
         //   colorPrimary: "hsl(47.9 95.8% 53.1%)",
         // },
       }}
+      dynamic
     >
       <html lang="en">
         <body

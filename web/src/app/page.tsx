@@ -5,7 +5,7 @@ import { Profile } from "@/components/profile";
 import { auth } from "@clerk/nextjs/server";
 
 export default async function Home() {
-  const { userId } = auth();
+  const { userId } = await auth();
 
   if (!userId) {
     throw new Error("User not found");

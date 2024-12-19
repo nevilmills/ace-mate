@@ -1,16 +1,15 @@
 import React from "react";
-import { Post } from "./post";
 import { Button } from "./ui/button";
 import Link from "next/link";
-import { auth } from "@clerk/nextjs/server";
-import { getPostsByUserWithCourse } from "@/db/queries/post/select";
+import { getFeedPosts } from "@/db/queries/post/select";
+import { InfiniteScroll } from "./infinite-scroll";
 
 interface feedProps {
   userId: string;
 }
 
 export const Feed: React.FC<feedProps> = async ({ userId }) => {
-  const postsWithCourses = await getPostsByUserWithCourse(userId);
+  const posts = await getFeedPosts(userId, 1, 3);
 
   return (
     <div className="w-[750px] flex flex-col space-y-4">
@@ -20,9 +19,7 @@ export const Feed: React.FC<feedProps> = async ({ userId }) => {
           <Link href="/create-post">Create Post</Link>
         </Button>
       </div>
-      {postsWithCourses.map((item) => (
-        <Post key={item.post.id} data={item} />
-      ))}
+      <InfiniteScroll initialPosts={posts} />
     </div>
   );
 };
