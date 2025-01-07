@@ -8,6 +8,7 @@ import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useAuth } from "@clerk/nextjs";
 import { ExistingUser } from "@/db/schema";
+import { CircleUser, FlagTriangleRight } from "lucide-react";
 
 interface AddFriendButtonProps {
   friends: Record<string, boolean>;
@@ -20,10 +21,10 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
   const [golfers, setGolfers] = useState<ExistingUser[]>([]);
 
   const fetchGolfers = async (partialUsername: string) => {
-    // if (partialUsername.length < 3) {
-    //   setGolfers([]);
-    //   return;
-    // }
+    if (partialUsername.length < 3) {
+      setGolfers([]);
+      return;
+    }
     const data = await getUserAutocompletion(partialUsername);
 
     // remove current user from list
@@ -53,22 +54,27 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="bg-[#0a0a0a] max-w-[900px] h-[600px] p-0 overflow-hidden">
-        <ScrollArea className="w-full h-full flex flex-col">
-          <div className="flex items-center justify-center h-28 p-8 sticky top-0 bg-card border-b-[1px] border-[rgb(41 37 36)]">
-            <Input onChange={handleChange} placeholder="Find golfers" />
+        <div className="flex items-center justify-center h-28 p-8 sticky top-0 bg-card border-b-[1px] border-[rgb(41 37 36)]">
+          <Input onChange={handleChange} placeholder="Find golfers" />
+        </div>
+        {golfers.length > 0 ? (
+          <ScrollArea className="w-full h-full flex flex-col">
+            <div className="grow p-8 px-16 space-y-4">
+              {golfers.map((golfer) => {
+                if (friends[golfer.id])
+                  return (
+                    <UserCard key={golfer.id} user={golfer} added={true} />
+                  );
+                return <UserCard key={golfer.id} user={golfer} />;
+              })}
+            </div>
+          </ScrollArea>
+        ) : (
+          <div className="w-full flex flex-col items-center mb-4 text-muted-foreground space-y-2">
+            <FlagTriangleRight />
+            <span>Search here for fellow golfers</span>
           </div>
-          <div className="grow p-8 px-16 space-y-4">
-            {golfers.length > 0
-              ? golfers.map((golfer) => {
-                  if (friends[golfer.id])
-                    return (
-                      <UserCard key={golfer.id} user={golfer} added={true} />
-                    );
-                  return <UserCard key={golfer.id} user={golfer} />;
-                })
-              : null}
-          </div>
-        </ScrollArea>
+        )}
       </DialogContent>
     </Dialog>
   );
