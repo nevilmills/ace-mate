@@ -19,7 +19,7 @@ export default async function Home() {
         <div className="h-[24px]" />
 
         <Profile />
-        <MostPlayed userId={userId} />
+        {/* <MostPlayed userId={userId} /> */}
       </div>
     </div>
   );

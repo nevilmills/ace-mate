@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db/db";
-import { golf_course, post } from "@/db/schema";
+import { golf_course, post, user } from "@/db/schema";
 import { count, desc, eq } from "drizzle-orm";
 
 export const getPostsByUserWithCourse = async (userId: string) => {
@@ -26,4 +26,31 @@ export const getRoundsPlayedCountsByUser = async (userId: string) => {
     .limit(5);
 
   return roundsPlayed;
+};
+
+/**
+ * Fetches the users post with pagination.
+ * Does not include the users' friends posts.
+ * @param userId
+ * @param page
+ * @param pageSize
+ * @returns
+ */
+export const getFeedPosts = async (
+  userId: string,
+  page: number,
+  pageSize: number
+) => {
+  const posts = await db
+    .select()
+    .from(post)
+    .where(eq(post.userId, userId))
+    .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id))
+    .innerJoin(user, eq(post.userId, user.id))
+    .orderBy(desc(post.createdAt))
+    .limit(pageSize)
+    .offset((page - 1) * pageSize);
+  // console.log(posts);
+  const data = await JSON.parse(JSON.stringify(posts));
+  return data;
 };
