@@ -11,7 +11,7 @@ interface FriendsListProps {
 export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
   const friendIds = await getUsersFriends(userId);
   const friends = await getUsersByIds(
-    friendIds.map((friend) => friend.friendId)
+    friendIds.map((friend) => friend.friendId) // map array of userIds+friendIds to array of friendIds
   );
   const friendsMap = friends.reduce<Record<string, boolean>>((acc, friend) => {
     acc[friend.id] = true;
