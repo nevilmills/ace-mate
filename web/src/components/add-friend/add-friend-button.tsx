@@ -8,17 +8,20 @@ import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
 import { useAuth } from "@clerk/nextjs";
 import { ExistingUser } from "@/db/schema";
-import { CircleUser, FlagTriangleRight } from "lucide-react";
+import { FlagTriangleRight } from "lucide-react";
+import { createUserFriend } from "@/db/queries/user_friends/insert";
+import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 
 interface AddFriendButtonProps {
-  friends: Record<string, boolean>;
+  friendsMap: Record<string, boolean>;
 }
 
 export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
-  friends,
+  friendsMap,
 }) => {
-  const { userId } = useAuth();
+  const { userId: loggedInUser } = useAuth();
   const [golfers, setGolfers] = useState<ExistingUser[]>([]);
+  const [friends, setFriends] = useState<Record<string, boolean>>(friendsMap);
 
   const fetchGolfers = async (partialUsername: string) => {
     if (partialUsername.length < 3) {
@@ -28,7 +31,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
     const data = await getUserAutocompletion(partialUsername);
 
     // remove current user from list
-    const filtered = data.filter((golfer) => golfer.id !== userId);
+    const filtered = data.filter((golfer) => golfer.id !== loggedInUser);
     setGolfers(filtered);
   };
 
@@ -44,6 +47,18 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     debouncedFetchGolfers(e.target.value);
+  };
+
+  const handleAddFriend = (friendId: string) => {
+    createUserFriend(loggedInUser!, friendId);
+    createUserFriend(friendId, loggedInUser!);
+    setFriends((prevFriends) => ({ ...prevFriends, [friendId]: true }));
+  };
+
+  const handleUnfriend = (friendId: string) => {
+    deleteUserFriend(loggedInUser!, friendId);
+    deleteUserFriend(friendId, loggedInUser!);
+    setFriends((prevFriends) => ({ ...prevFriends, [friendId]: false }));
   };
 
   return (
@@ -63,9 +78,22 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
               {golfers.map((golfer) => {
                 if (friends[golfer.id])
                   return (
-                    <UserCard key={golfer.id} user={golfer} added={true} />
+                    <UserCard
+                      key={golfer.id}
+                      user={golfer}
+                      added={true}
+                      handleAddFriend={handleAddFriend}
+                      handleUnfriend={handleUnfriend}
+                    />
                   );
-                return <UserCard key={golfer.id} user={golfer} />;
+                return (
+                  <UserCard
+                    key={golfer.id}
+                    user={golfer}
+                    handleAddFriend={handleAddFriend}
+                    handleUnfriend={handleUnfriend}
+                  />
+                );
               })}
             </div>
           </ScrollArea>

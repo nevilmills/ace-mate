@@ -48,7 +48,7 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
       </span>
       <div className="h-8" />
       <div>
-        <AddFriendButton friends={friendsMap} />
+        <AddFriendButton friendsMap={friendsMap} />
       </div>
     </div>
   );

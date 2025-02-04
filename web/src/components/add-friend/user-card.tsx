@@ -5,21 +5,21 @@ import { Button } from "../ui/button";
 import { ExistingUser } from "@/db/schema";
 import { useAuth } from "@clerk/nextjs";
 import { createUserFriend } from "@/db/queries/user_friends/insert";
+import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 
 interface UserCardProps {
   user: ExistingUser;
   added?: boolean;
+  handleAddFriend: (friendId: string) => void;
+  handleUnfriend: (friendId: string) => void;
 }
 
-export const UserCard: React.FC<UserCardProps> = ({ user, added }) => {
-  const { userId } = useAuth();
-
-  /**
-   * Once you've fetched the users list of friends in a parent component,
-   * put code here to check if the current user is already a friend.
-   * If they are, show a different button.
-   */
-
+export const UserCard: React.FC<UserCardProps> = ({
+  user,
+  added,
+  handleAddFriend,
+  handleUnfriend,
+}) => {
   return (
     <Card className="h-32 flex p-4 px-8 items-center">
       <div className="rounded-full overflow-hidden flex items-center justify-center h-[90px] w-[90px]">
@@ -36,27 +36,21 @@ export const UserCard: React.FC<UserCardProps> = ({ user, added }) => {
       </span>
       <div className="w-8" />
       <div className="grow flex justify-end">
-        {added ? (
+        {!added ? (
           <Button
             size="lg"
             className="font-bold text-lg"
-            onClick={() => {
-              createUserFriend(userId!, user.id);
-              createUserFriend(user.id, userId!);
-            }}
+            onClick={() => handleAddFriend(user.id)}
           >
-            Un-friend
+            Add
           </Button>
         ) : (
           <Button
             size="lg"
             className="font-bold text-lg"
-            onClick={() => {
-              createUserFriend(userId!, user.id);
-              createUserFriend(user.id, userId!);
-            }}
+            onClick={() => handleUnfriend(user.id)}
           >
-            Add
+            Un-friend
           </Button>
         )}
       </div>
