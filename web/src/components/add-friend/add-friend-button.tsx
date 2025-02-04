@@ -62,7 +62,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={(isOpen) => !isOpen && setGolfers([])}>
       <DialogTrigger asChild>
         <Button size="sm" className="font-bold">
           + Add friend
