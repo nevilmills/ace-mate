@@ -28,11 +28,8 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
       setGolfers([]);
       return;
     }
-    const data = await getUserAutocompletion(partialUsername);
-
-    // remove current user from list
-    const filtered = data.filter((golfer) => golfer.id !== loggedInUser);
-    setGolfers(filtered);
+    const data = await getUserAutocompletion(partialUsername, loggedInUser!);
+    setGolfers(data);
   };
 
   const debounce = (fn: Function, ms = 300) => {

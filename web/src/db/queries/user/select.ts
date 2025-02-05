@@ -2,13 +2,26 @@
 
 import { db } from "@/db/db";
 import { user } from "@/db/schema";
-import { eq, ilike, inArray } from "drizzle-orm";
+import { and, eq, ilike, inArray, not } from "drizzle-orm";
 
-export const getUserAutocompletion = async (partialUsername: string) => {
+/**
+ * Returns a list of users that match the partial username excluding the supplied user
+ * @param partialUsername
+ * @returns
+ */
+export const getUserAutocompletion = async (
+  partialUsername: string,
+  excludedUser: string
+) => {
   const users = await db
     .select()
     .from(user)
-    .where(ilike(user.username, `%${partialUsername}%`))
+    .where(
+      and(
+        ilike(user.username, `%${partialUsername}%`),
+        not(eq(user.id, excludedUser))
+      )
+    )
     .limit(10);
   return users;
 };
