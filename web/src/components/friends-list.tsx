@@ -38,10 +38,10 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
           friends.map((friend) => <Person key={friend.id} user={friend} />)
         ) : (
           <>
-            <span className="font-semibold text-muted-foreground text-center">
+            <span className="font-semibold text-muted-foreground">
               No friends currently added.
             </span>
-            <p className="text-muted-foreground text-center">
+            <p className="text-muted-foreground">
               Use the button below to find and add a friend!
             </p>
           </>
