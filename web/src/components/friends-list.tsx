@@ -22,12 +22,17 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
     <div className="flex flex-col w-72">
       <h3 className="text-2xl font-bold">Friends</h3>
       <div className="h-8" />
-      <div className="flex justify-between">
-        <span className="text-md font-semibold text-muted-foreground">
-          ({friends.length})
-        </span>
-      </div>
-      <div className="h-8" />
+      {friends.length > 0 && (
+        <>
+          <div className="flex justify-between">
+            <span className="text-md font-semibold text-muted-foreground">
+              ({friends.length})
+            </span>
+          </div>
+          <div className="h-8" />
+        </>
+      )}
+
       <div className="flex flex-col space-y-4">
         {friends.length > 0 ? (
           friends.map((friend) => <Person key={friend.id} user={friend} />)
@@ -43,12 +48,16 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
         )}
       </div>
       <div className="h-8" />
-      <span className="font-bold underline text-muted-foreground hover:cursor-pointer">
-        Show more
-      </span>
-      <div className="h-8" />
+      {friends.length >= 3 && (
+        <>
+          <span className="font-bold underline text-muted-foreground hover:cursor-pointer">
+            Show more
+          </span>
+          <div className="h-8" />
+        </>
+      )}
       <div>
-        <AddFriendButton friendsMap={friendsMap} />
+        <AddFriendButton friendsMap={friendsMap} loggedInUser={userId} />
       </div>
     </div>
   );
