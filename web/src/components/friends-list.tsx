@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "./person";
 import { AddFriendButton } from "./add-friend/add-friend-button";
-import { getUsersFriends } from "@/db/queries/user_friends/select";
-import { getUsersByIds } from "@/db/queries/user/select";
 import { fetchUsersFriends } from "@/app/actions";
 import { ExistingUser } from "@/db/schema";
 
@@ -13,14 +11,32 @@ interface FriendsListProps {
 
 export const FriendsList: React.FC<FriendsListProps> = ({ userId }) => {
   const [friends, setFriends] = useState<ExistingUser[]>([]);
+  const [visibleFriends, setVisibleFriends] = useState<ExistingUser[]>([]);
+  const [friendsShown, setFriendsShown] = useState<number>(3);
 
   useEffect(() => {
     const fetchFriends = async () => {
       const friends = await fetchUsersFriends(userId);
       setFriends(friends);
+      setVisibleFriends(friends.slice(0, 3)); // Show only 3 friends initially
     };
     fetchFriends();
   }, []);
+
+  // this will need to be changed when we implement the show more functionality
+  // when show more is pressed and we are showing more than 3 friends, this will be resetting it to 3.
+  // that may be okay.
+  useEffect(() => {
+    setVisibleFriends(friends.slice(0, friendsShown));
+  }, [friends]);
+
+  const showMoreFriends = () => {
+    if (friendsShown >= friends.length) {
+      return;
+    }
+    setFriendsShown(friendsShown + 3);
+    setVisibleFriends(friends.slice(0, friendsShown + 3));
+  };
 
   return (
     <div className="flex flex-col w-72">
@@ -39,7 +55,9 @@ export const FriendsList: React.FC<FriendsListProps> = ({ userId }) => {
 
       <div className="flex flex-col space-y-4">
         {friends.length > 0 ? (
-          friends.map((friend) => <Person key={friend.id} user={friend} />)
+          visibleFriends.map((friend) => (
+            <Person key={friend.id} user={friend} />
+          ))
         ) : (
           <>
             <span className="font-semibold text-muted-foreground">
@@ -52,11 +70,14 @@ export const FriendsList: React.FC<FriendsListProps> = ({ userId }) => {
         )}
       </div>
       <div className="h-8" />
-      {friends.length >= 3 && (
+      {friends.length >= 3 && friendsShown < friends.length && (
         <>
-          <span className="font-bold underline text-muted-foreground hover:cursor-pointer">
+          <button
+            className="font-bold underline text-muted-foreground hover:cursor-pointer self-start"
+            onClick={showMoreFriends}
+          >
             Show more
-          </span>
+          </button>
           <div className="h-8" />
         </>
       )}
