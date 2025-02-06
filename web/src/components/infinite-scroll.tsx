@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Post } from "./post";
 import { useInView } from "react-intersection-observer";
 import { ExistingPost, ExistingUser, GolfCourse } from "@/db/schema";
-import { fetchPosts } from "@/app/action";
+import { fetchPosts } from "@/app/actions";
 
 interface InfiniteScrollProps {
   initialPosts: {
