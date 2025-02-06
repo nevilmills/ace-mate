@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -21,16 +21,39 @@ import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface AddFriendButtonProps {
-  friendsMap: Record<string, boolean>;
+  friends: ExistingUser[];
+  setFriends: React.Dispatch<
+    React.SetStateAction<
+      {
+        id: string;
+        username: string;
+        createdAt: Date;
+        handicap: string | null;
+        imageUrl: string;
+      }[]
+    >
+  >;
   loggedInUser: string;
 }
 
 export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
-  friendsMap,
+  friends,
+  setFriends,
   loggedInUser,
 }) => {
   const [golfers, setGolfers] = useState<ExistingUser[]>([]);
-  const [friends, setFriends] = useState<Record<string, boolean>>(friendsMap);
+  const [friendsMap, setFriendsMap] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (friends.length > 0) {
+      const map = friends.reduce<Record<string, boolean>>((acc, friend) => {
+        acc[friend.id] = true;
+        return acc;
+      }, {});
+
+      setFriendsMap(map);
+    }
+  }, [friends]);
 
   const fetchGolfers = async (partialUsername: string) => {
     if (partialUsername.length < 3) {
@@ -58,13 +81,26 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
   const handleAddFriend = (friendId: string) => {
     createUserFriend(loggedInUser!, friendId);
     createUserFriend(friendId, loggedInUser!);
-    setFriends((prevFriends) => ({ ...prevFriends, [friendId]: true }));
+    setFriendsMap((prevFriendsMap) => ({
+      ...prevFriendsMap,
+      [friendId]: true,
+    }));
+    setFriends((prevFriends) => [
+      ...prevFriends,
+      golfers.find((golfer) => golfer.id === friendId)!,
+    ]);
   };
 
   const handleUnfriend = (friendId: string) => {
     deleteUserFriend(loggedInUser!, friendId);
     deleteUserFriend(friendId, loggedInUser!);
-    setFriends((prevFriends) => ({ ...prevFriends, [friendId]: false }));
+    setFriendsMap((prevFriendsMap) => ({
+      ...prevFriendsMap,
+      [friendId]: false,
+    }));
+    setFriends((prevFriends) =>
+      prevFriends.filter((friend) => friend.id !== friendId)
+    );
   };
 
   return (
@@ -88,7 +124,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
           <ScrollArea className="w-full h-full flex flex-col">
             <div className="grow p-8 px-16 space-y-4">
               {golfers.map((golfer) => {
-                if (friends[golfer.id])
+                if (friendsMap[golfer.id])
                   return (
                     <UserCard
                       key={golfer.id}

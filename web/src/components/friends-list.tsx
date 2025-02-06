@@ -1,22 +1,26 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Person } from "./person";
 import { AddFriendButton } from "./add-friend/add-friend-button";
 import { getUsersFriends } from "@/db/queries/user_friends/select";
 import { getUsersByIds } from "@/db/queries/user/select";
+import { fetchUsersFriends } from "@/app/actions";
+import { ExistingUser } from "@/db/schema";
 
 interface FriendsListProps {
   userId: string;
 }
 
-export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
-  const friendIds = await getUsersFriends(userId);
-  const friends = await getUsersByIds(
-    friendIds.map((friend) => friend.friendId) // map array of userIds+friendIds to array of friendIds
-  );
-  const friendsMap = friends.reduce<Record<string, boolean>>((acc, friend) => {
-    acc[friend.id] = true;
-    return acc;
-  }, {});
+export const FriendsList: React.FC<FriendsListProps> = ({ userId }) => {
+  const [friends, setFriends] = useState<ExistingUser[]>([]);
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const friends = await fetchUsersFriends(userId);
+      setFriends(friends);
+    };
+    fetchFriends();
+  }, []);
 
   return (
     <div className="flex flex-col w-72">
@@ -57,7 +61,11 @@ export const FriendsList: React.FC<FriendsListProps> = async ({ userId }) => {
         </>
       )}
       <div>
-        <AddFriendButton friendsMap={friendsMap} loggedInUser={userId} />
+        <AddFriendButton
+          friends={friends}
+          setFriends={setFriends}
+          loggedInUser={userId}
+        />
       </div>
     </div>
   );
