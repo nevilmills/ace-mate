@@ -22,17 +22,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 interface AddFriendButtonProps {
   friends: ExistingUser[];
-  setFriends: React.Dispatch<
-    React.SetStateAction<
-      {
-        id: string;
-        username: string;
-        createdAt: Date;
-        handicap: string | null;
-        imageUrl: string;
-      }[]
-    >
-  >;
+  setFriends: React.Dispatch<React.SetStateAction<ExistingUser[]>>;
   loggedInUser: string;
 }
 
