@@ -3,9 +3,6 @@ import { Card } from "../ui/card";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ExistingUser } from "@/db/schema";
-import { useAuth } from "@clerk/nextjs";
-import { createUserFriend } from "@/db/queries/user_friends/insert";
-import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 
 interface UserCardProps {
   user: ExistingUser;
