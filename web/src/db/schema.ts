@@ -15,6 +15,7 @@ export const user = pgTable("user", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
   handicap: numeric("handicap", { precision: 3, scale: 1 }),
   imageUrl: text("image_url").default("").notNull(),
+  bio: text("bio"),
 });
 
 export const userFriends = pgTable(

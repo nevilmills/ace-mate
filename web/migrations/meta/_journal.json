@@ -85,6 +85,13 @@
       "when": 1733595342115,
       "tag": "0011_far_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1738898636896,
+      "tag": "0012_moaning_nehzno",
+      "breakpoints": true
     }
   ]
 }
