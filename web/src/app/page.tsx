@@ -18,7 +18,7 @@ export default async function Home() {
       <div className="flex flex-col space-y-8">
         <div className="h-[24px]" />
 
-        <Profile />
+        <Profile userId={userId} />
         {/* <MostPlayed userId={userId} /> */}
       </div>
     </div>

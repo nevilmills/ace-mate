@@ -1,18 +1,18 @@
-import { user } from "@/db/schema";
 import React from "react";
 import { Card, CardHeader, CardContent } from "./ui/card";
-import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import { getUserById } from "@/db/queries/user/select";
+import { Bio } from "./bio";
 
-interface ProfileProps {}
+interface ProfileProps {
+  userId: string;
+}
 
-export const Profile: React.FC<ProfileProps> = async ({}) => {
-  const user = await currentUser();
-  const { imageUrl } = await getUserById(user!.id);
+export const Profile: React.FC<ProfileProps> = async ({ userId }) => {
+  const { username, imageUrl, bio, handicap } = await getUserById(userId);
 
   return (
-    <Card className="max-w-[380px]">
+    <Card className="max-w-[380px] w-[380px]">
       <CardHeader className="flex flex-row space-x-4">
         <div className="rounded-full overflow-hidden">
           <Image
@@ -23,15 +23,16 @@ export const Profile: React.FC<ProfileProps> = async ({}) => {
           />
         </div>
         <div className="flex flex-col">
-          <span className="font-semibold">{user?.username}</span>
-          <span className="text-sm text-muted-foreground">HCP: 9.8</span>
+          <span className="font-semibold">{username}</span>
+          <span className="text-sm text-muted-foreground">HCP: {handicap}</span>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        {bio ? (
+          <Bio userId={userId} text={bio} />
+        ) : (
+          <Bio userId={userId} text="No bio provided" />
+        )}
       </CardContent>
     </Card>
   );

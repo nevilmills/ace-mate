@@ -39,3 +39,7 @@ export const updateHandicap = async (userId: string) => {
 export const updateUser = async (userData: NewUser) => {
   await db.update(user).set(userData).where(eq(user.id, userData.id));
 };
+
+export const updateUserBio = async (userId: string, bio: string) => {
+  await db.update(user).set({ bio }).where(eq(user.id, userId));
+};
