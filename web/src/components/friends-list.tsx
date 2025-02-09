@@ -2,30 +2,29 @@
 import React, { useEffect, useState } from "react";
 import { Person } from "./person";
 import { AddFriendButton } from "./add-friend/add-friend-button";
-import { fetchUsersFriends } from "@/app/actions";
 import { ExistingUser } from "@/db/schema";
 
 interface FriendsListProps {
   userId: string;
+  friends: ExistingUser[];
 }
 
-export const FriendsList: React.FC<FriendsListProps> = ({ userId }) => {
-  const [friends, setFriends] = useState<ExistingUser[]>([]);
+export const FriendsList: React.FC<FriendsListProps> = ({
+  userId,
+  friends: initialFriends,
+}) => {
+  const [friends, setFriends] = useState<ExistingUser[]>(initialFriends);
   const [visibleFriends, setVisibleFriends] = useState<ExistingUser[]>([]);
   const [friendsShown, setFriendsShown] = useState<number>(3);
 
   useEffect(() => {
-    const fetchFriends = async () => {
-      const friends = await fetchUsersFriends(userId);
-      setFriends(friends);
-      setVisibleFriends(friends.slice(0, 3)); // Show only 3 friends initially
-    };
-    fetchFriends();
+    setVisibleFriends(friends.slice(0, 3)); // Show only 3 friends initially
   }, []);
 
   // this will need to be changed when we implement the show more functionality
   // when show more is pressed and we are showing more than 3 friends, this will be resetting it to 3.
   // that may be okay.
+  // trigger a re-render when friends are updated
   useEffect(() => {
     setVisibleFriends(friends.slice(0, friendsShown));
   }, [friends]);

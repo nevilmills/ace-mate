@@ -11,12 +11,12 @@ interface InfiniteScrollProps {
     golf_course: GolfCourse;
     user: ExistingUser;
   }[];
-  userId: string;
+  userIds: string[];
 }
 
 export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
   initialPosts,
-  userId,
+  userIds,
 }) => {
   const [posts, setPosts] = useState(initialPosts);
   const [page, setPage] = useState(1);
@@ -25,7 +25,7 @@ export const InfiniteScroll: React.FC<InfiniteScrollProps> = ({
 
   const loadMorePosts = async () => {
     const next = page + 1;
-    const newPosts = await fetchPosts({ page: next, userId });
+    const newPosts = await fetchPosts({ page: next, userIds });
     if (newPosts.length > 0) {
       setPage(next);
       setPosts([...posts, ...newPosts]);

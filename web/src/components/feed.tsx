@@ -3,13 +3,17 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { getFeedPosts } from "@/db/queries/post/select";
 import { InfiniteScroll } from "./infinite-scroll";
+import { ExistingUser } from "@/db/schema";
 
 interface feedProps {
   userId: string;
+  friends: ExistingUser[];
 }
 
-export const Feed: React.FC<feedProps> = async ({ userId }) => {
-  const posts = await getFeedPosts(userId, 1, 3); // fetch initial posts
+export const Feed: React.FC<feedProps> = async ({ userId, friends }) => {
+  const friendIds = friends.map((friend) => friend.id); // map friends to their ids
+  const userIds = [userId, ...friendIds]; // combine userId and friendIds
+  const posts = await getFeedPosts(userIds, 1, 3); // fetch initial posts
 
   return (
     <div className="w-[750px] flex flex-col space-y-4">
@@ -19,7 +23,7 @@ export const Feed: React.FC<feedProps> = async ({ userId }) => {
           <Link href="/create-post">Create Post</Link>
         </Button>
       </div>
-      <InfiniteScroll initialPosts={posts} userId={userId} />
+      <InfiniteScroll initialPosts={posts} userIds={userIds} />
     </div>
   );
 };

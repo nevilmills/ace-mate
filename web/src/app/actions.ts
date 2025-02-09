@@ -6,12 +6,12 @@ import { getUsersFriends } from "@/db/queries/user_friends/select";
 
 export const fetchPosts = async ({
   page = 1,
-  userId,
+  userIds,
 }: {
   page?: number;
-  userId: string;
+  userIds: string[];
 }) => {
-  const posts = await getFeedPosts(userId, page, 3);
+  const posts = await getFeedPosts(userIds, page, 3);
   return posts;
 };
 
