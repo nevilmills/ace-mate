@@ -11,7 +11,7 @@ import {
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(), // same as clerk id
-  username: text("username").notNull(),
+  username: text("username").notNull().unique(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   handicap: numeric("handicap", { precision: 3, scale: 1 }),
   imageUrl: text("image_url").default("").notNull(),
