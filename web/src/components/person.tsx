@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface PersonProps {
@@ -23,7 +24,9 @@ export const Person: React.FC<PersonProps> = ({ user }) => {
         />
       </div>
       <div className="flex flex-col">
-        <span className="font-bold">{user.username}</span>
+        <Link className="font-bold" href={`/${user.username}`}>
+          {user.username}
+        </Link>
         <span className="text-sm font-semibold text-muted-foreground">
           Chilliwack Golf Club
         </span>
