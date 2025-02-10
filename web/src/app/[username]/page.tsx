@@ -1,4 +1,5 @@
 import { PostHistory } from "@/components/post-history";
+import { Profile } from "@/components/profile";
 import { getUserByUsername } from "@/db/queries/user/select";
 import React from "react";
 
@@ -17,8 +18,12 @@ export const Page: React.FC<PageProps> = async ({ params }) => {
   }
 
   return (
-    <div className="px-12 py-8 flex flex-row justify-evenly">
+    <div className="px-12 py-8 flex flex-row justify-center space-x-28">
       <PostHistory user={user} />
+      <div className="flex flex-col space-y-8">
+        <div className="h-[24px]" />
+        <Profile editable={false} userId={user.id} />
+      </div>
     </div>
   );
 };
