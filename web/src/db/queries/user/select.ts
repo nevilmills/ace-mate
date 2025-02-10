@@ -38,3 +38,11 @@ export const getUserById = async (userId: string) => {
     .where(eq(user.id, userId));
   return result[0];
 };
+
+export const getUserByUsername = async (username: string) => {
+  const result = await db
+    .selectDistinct()
+    .from(user)
+    .where(eq(user.username, username));
+  return result[0];
+};
