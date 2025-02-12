@@ -1,6 +1,7 @@
 import { getPostsFrom30DaysAgo } from "@/db/queries/post/select";
 import { ExistingUser } from "@/db/schema";
 import { calculateHandicapFromPosts } from "@/lib/utils";
+import { ArrowDownLeft, ArrowUpRight, FlagTriangleRight } from "lucide-react";
 import React from "react";
 
 interface HandicapProps {
@@ -38,27 +39,35 @@ export const Handicap: React.FC<HandicapProps> = ({ user }) => {
     if (!difference) return;
     if (difference > 0) {
       return (
-        <span className="text-red-600 text-sm font-semibold">
-          +{calculateHandicapDifference()} last 30 days
-        </span>
+        <div>
+          <span className="text-muted-foreground text-xs font-semibold flex items-center ">
+            <ArrowUpRight size={"16px"} color="#f97316" className="mr-1" />
+            <span className="text-white mr-1">
+              +{await calculateHandicapDifference()}
+            </span>
+            vs previous month
+          </span>
+        </div>
       );
     } else {
       return (
-        <span className="text-green-600 text-sm font-semibold">
-          {calculateHandicapDifference()} last 30 days
-        </span>
+        <div>
+          <span className="text-muted-foreground text-xs font-semibold flex items-center ">
+            <ArrowDownLeft size={"16px"} color="#22C55E" className="mr-1" />
+            <span className="text-white mr-1">
+              {await calculateHandicapDifference()}
+            </span>
+            vs previous month
+          </span>
+        </div>
       );
     }
   };
   return (
-    <div className="flex flex-col">
-      <div>
-        <span className="text-sm text-muted-foreground font-semibold">
-          HCP {handicap}
-        </span>
-      </div>
-
-      <div>{renderHandicapDifference()}</div>
+    <div className="flex flex-col space-y-1">
+      <span className="text-xs text-muted-foreground font-semibold">HCP</span>
+      <span className="font-bold text-xl">{handicap}</span>
+      {renderHandicapDifference()}
     </div>
   );
 };
