@@ -3,6 +3,7 @@ import { Card, CardHeader, CardContent } from "./ui/card";
 import Image from "next/image";
 import { getUserById } from "@/db/queries/user/select";
 import { Bio } from "./bio";
+import { Handicap } from "./handicap";
 
 interface ProfileProps {
   userId: string;
@@ -10,7 +11,8 @@ interface ProfileProps {
 }
 
 export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
-  const { username, imageUrl, bio, handicap } = await getUserById(userId);
+  const user = await getUserById(userId);
+  const { username, imageUrl, handicap, bio } = user;
 
   if (editable) {
     return (
@@ -25,10 +27,8 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
             />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold">{username}</span>
-            <span className="text-sm text-muted-foreground">
-              HCP: {handicap}
-            </span>
+            <span className="">{username}</span>
+            <Handicap user={user} />
           </div>
         </CardHeader>
         <CardContent>
@@ -54,9 +54,7 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
           </div>
           <div className="flex flex-col">
             <span className="font-semibold">{username}</span>
-            <span className="text-sm text-muted-foreground">
-              HCP: {handicap}
-            </span>
+            <Handicap user={user} />
           </div>
         </CardHeader>
         <CardContent>

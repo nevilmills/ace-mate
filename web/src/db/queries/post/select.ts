@@ -2,7 +2,7 @@
 
 import { db } from "@/db/db";
 import { golf_course, post, user } from "@/db/schema";
-import { count, desc, eq, inArray } from "drizzle-orm";
+import { and, count, desc, eq, inArray, lt, sql } from "drizzle-orm";
 
 export const getPostsByUserWithCourse = async (userId: string) => {
   const posts = await db
@@ -51,4 +51,30 @@ export const getFeedPosts = async (
     .offset((page - 1) * pageSize);
   const data = await JSON.parse(JSON.stringify(posts));
   return data;
+};
+
+/**
+ * Fetches posts from 30 days ago, defaulting to 20 posts.
+ * Used to calculate the users handicap trend over the last 30 days.
+ * @param userId
+ * @param count
+ * @returns
+ */
+export const getPostsFrom30DaysAgo = async (
+  userId: string,
+  count: number = 20
+) => {
+  const posts = await db
+    .select()
+    .from(post)
+    .where(
+      and(
+        eq(post.userId, userId),
+        lt(post.date, sql`now() - interval '30 days'`)
+      )
+    )
+    .orderBy(desc(post.date))
+    .limit(count)
+    .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id));
+  return posts;
 };
