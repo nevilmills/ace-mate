@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import React from "react";
-import { Calendar } from "../ui/calendar";
 import { PostCreatorMenu } from "@/lib/types";
 import { Input } from "../ui/input";
 
@@ -61,7 +60,7 @@ export const SelectScore: React.FC<SelectScoreProps> = ({
           Back
         </Button>
         <Button asChild className="font-semibold" onClick={handleSubmit}>
-          <Link href="/">Post Score</Link>
+          <Link href="/?postSubmit=true">Post Score</Link>
         </Button>
       </CardFooter>
     </Card>
