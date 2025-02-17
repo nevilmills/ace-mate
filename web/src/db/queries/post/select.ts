@@ -78,3 +78,18 @@ export const getPostsFrom30DaysAgo = async (
     .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id));
   return posts;
 };
+
+export const getMostPlayedCourseId = async (userId: string) => {
+  const result = await db
+    .select({
+      golfCourseId: post.golfCourseId,
+      roundCount: sql<number>`COUNT(*)`,
+    })
+    .from(post)
+    .where(eq(post.userId, userId))
+    .groupBy(post.golfCourseId)
+    .orderBy(desc(sql`COUNT(*)`))
+    .limit(1);
+
+  return result[0] ?? null; // Return first result or null if none found
+};

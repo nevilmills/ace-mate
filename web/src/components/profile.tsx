@@ -4,6 +4,8 @@ import Image from "next/image";
 import { getUserById } from "@/db/queries/user/select";
 import { Bio } from "./bio";
 import { Handicap } from "./handicap";
+import { Badge } from "./ui/badge";
+import { HomeCourseBadge } from "./home-course-badge";
 
 interface ProfileProps {
   userId: string;
@@ -15,8 +17,8 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
   const { username, imageUrl, handicap, bio } = user;
 
   return (
-    <Card className="max-w-[380px] w-[380px]">
-      <CardHeader className="">
+    <Card className="max-w-[400px] w-[400px]">
+      <CardHeader className="space-y-4">
         <div className="flex flex-row space-x-4">
           <div className="rounded-full overflow-hidden">
             <Image
@@ -32,8 +34,11 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
             <Handicap user={user} />
           </div>
         </div>
+        <div>
+          <HomeCourseBadge user={user} />
+        </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="">
         {editable ? (
           bio ? (
             <Bio userId={userId} text={bio} />
