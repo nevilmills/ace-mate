@@ -1,6 +1,8 @@
+"use client";
+import { getMostPlayedCourse } from "@/app/actions";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface PersonProps {
   user: {
@@ -13,6 +15,18 @@ interface PersonProps {
 }
 
 export const Person: React.FC<PersonProps> = ({ user }) => {
+  const [courseName, setCourseName] = React.useState<string | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    const getCourseName = async () => {
+      const name = await getMostPlayedCourse(user.id);
+      setCourseName(name);
+    };
+    getCourseName();
+  }, []);
+
   return (
     <div className="flex space-x-4 h-16 items-center ">
       <div className="w-14 h-14 rounded-full">
@@ -27,9 +41,11 @@ export const Person: React.FC<PersonProps> = ({ user }) => {
         <Link className="font-bold" href={`/${user.username}`}>
           {user.username}
         </Link>
-        <span className="text-sm font-semibold text-muted-foreground">
-          Chilliwack Golf Club
-        </span>
+        {courseName && (
+          <span className="text-sm font-semibold text-muted-foreground">
+            {courseName}
+          </span>
+        )}
       </div>
     </div>
   );
