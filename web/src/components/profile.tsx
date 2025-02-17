@@ -34,9 +34,7 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
             <Handicap user={user} />
           </div>
         </div>
-        <div>
-          <HomeCourseBadge user={user} />
-        </div>
+        <HomeCourseBadge user={user} />
       </CardHeader>
       <CardContent className="">
         {editable ? (

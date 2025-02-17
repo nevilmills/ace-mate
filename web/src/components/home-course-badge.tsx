@@ -27,18 +27,22 @@ export const HomeCourseBadge: React.FC<HomeCourseBadgeProps> = async ({
 
   const courseName = await getMostPlayedCourse();
 
+  if (!courseName) return null;
+
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger>
-          <Badge className="bg-muted-foreground hover:bg-muted-foreground">
-            {courseName}
-          </Badge>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Most played course</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <Badge className="bg-muted-foreground hover:bg-muted-foreground">
+              {courseName}
+            </Badge>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Most played course</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </div>
   );
 };
