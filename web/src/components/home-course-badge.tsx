@@ -7,8 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ExistingUser } from "@/db/schema";
-import { getMostPlayedCourseId } from "@/db/queries/post/select";
-import { getGolfCourseById } from "@/db/queries/golf-course/select";
+import { getMostPlayedCourse } from "@/app/actions";
 
 interface HomeCourseBadgeProps {
   user: ExistingUser;
@@ -18,14 +17,7 @@ export const HomeCourseBadge: React.FC<HomeCourseBadgeProps> = async ({
   user,
 }) => {
   // find the most played course of the provided user
-  const getMostPlayedCourse = async () => {
-    const golfCourseId = await getMostPlayedCourseId(user.id);
-    if (!golfCourseId) return;
-    const golfCourse = await getGolfCourseById(golfCourseId.golfCourseId);
-    return golfCourse?.name;
-  };
-
-  const courseName = await getMostPlayedCourse();
+  const courseName = await getMostPlayedCourse(user.id);
 
   if (!courseName) return null;
 

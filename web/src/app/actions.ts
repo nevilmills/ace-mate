@@ -1,6 +1,7 @@
 "use server";
 
-import { getFeedPosts } from "@/db/queries/post/select";
+import { getGolfCourseById } from "@/db/queries/golf-course/select";
+import { getFeedPosts, getMostPlayedCourseId } from "@/db/queries/post/select";
 import { getUsersByIds } from "@/db/queries/user/select";
 import { getUsersFriends } from "@/db/queries/user_friends/select";
 
@@ -20,4 +21,12 @@ export const fetchUsersFriends = async (userId: string) => {
   const friendIds = userFriends.map((userFriend) => userFriend.friendId); // extract friendIds
   const friends = await getUsersByIds(friendIds);
   return friends;
+};
+
+// find the most played course of the provided user
+export const getMostPlayedCourse = async (userId: string) => {
+  const golfCourseId = await getMostPlayedCourseId(userId);
+  if (!golfCourseId) return;
+  const golfCourse = await getGolfCourseById(golfCourseId.golfCourseId);
+  return golfCourse?.name;
 };
