@@ -17,10 +17,7 @@ export const Handicap: React.FC<HandicapProps> = ({ user }) => {
 
   // we want to calculate the difference between the current handicap and handicap from 30 days ago.
   // we will need to first get the handicap from 30 days ago.
-  // if the user handicap is null, do not call the function or render the trend
   const calculateHandicapDifference = async () => {
-    if (!handicap) return;
-
     // fetch 20 most recent rounds prior to 30 days ago
     const posts = await getPostsFrom30DaysAgo(user.id);
 
@@ -36,7 +33,6 @@ export const Handicap: React.FC<HandicapProps> = ({ user }) => {
   const renderHandicapDifference = async () => {
     const difference = await calculateHandicapDifference(); // can remove this when add proper ui for when handicap is null
 
-    if (!difference) return;
     if (difference > 0) {
       return (
         <div>
@@ -63,11 +59,21 @@ export const Handicap: React.FC<HandicapProps> = ({ user }) => {
       );
     }
   };
+
   return (
     <div className="flex flex-col space-y-1">
       <span className="text-xs text-muted-foreground font-semibold">HCP</span>
-      <span className="font-bold text-xl">{handicap}</span>
-      {renderHandicapDifference()}
+      {
+        // if the user does not have a handicap, render a placeholder
+        !handicap ? (
+          <span className="font-semibold">N/A</span>
+        ) : (
+          <>
+            <span className="font-bold text-xl">{handicap}</span>
+            {renderHandicapDifference()}
+          </>
+        )
+      }
     </div>
   );
 };
