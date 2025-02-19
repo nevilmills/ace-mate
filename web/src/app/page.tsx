@@ -1,6 +1,5 @@
 import { Feed } from "@/components/feed";
 import { FriendsList } from "@/components/friends-list";
-import { MostPlayed } from "@/components/most-played";
 import { Profile } from "@/components/profile";
 import { auth } from "@clerk/nextjs/server";
 import { fetchUsersFriends } from "./actions";
@@ -26,7 +25,6 @@ export const Home = async ({
         <div className="h-[24px]" />
 
         <Profile editable={true} userId={userId} />
-        {/* <MostPlayed userId={userId} /> */}
       </div>
     </div>
   );
