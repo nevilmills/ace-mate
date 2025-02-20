@@ -5,22 +5,23 @@ import { Textarea } from "./ui/textarea";
 import { updateUserBio } from "@/db/queries/user/update";
 
 interface BioProps {
-  text: string;
+  initialBio: string | null;
   userId: string;
 }
 
-export const Bio: React.FC<BioProps> = ({ text, userId }) => {
+export const Bio: React.FC<BioProps> = ({ initialBio, userId }) => {
+  const initialValue = initialBio ? initialBio : "";
   const [editing, setEditing] = useState(false);
-  const [newText, setNewText] = useState(text);
+  const [text, setText] = useState(initialValue);
 
   const handleCancel = () => {
     setEditing(!editing);
-    setNewText(text);
+    setText(initialValue);
   };
 
   const handleSave = () => {
     setEditing(!editing);
-    updateUserBio(userId, newText);
+    updateUserBio(userId, text);
   };
 
   return (
@@ -28,14 +29,14 @@ export const Bio: React.FC<BioProps> = ({ text, userId }) => {
       {editing ? (
         <div>
           <Textarea
-            value={newText}
-            onChange={(e) => setNewText(e.target.value)}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
             placeholder="Tell us about yourself"
             className="text-muted-foreground text-[16px] resize-none"
           />
         </div>
       ) : (
-        <p className="text-muted-foreground">{newText}</p>
+        <p className="text-muted-foreground">{text}</p>
       )}
       <div className="h-4" />
       {editing ? (

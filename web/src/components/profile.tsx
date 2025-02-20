@@ -6,6 +6,7 @@ import { Bio } from "./bio";
 import { Handicap } from "./handicap";
 import { Badge } from "./ui/badge";
 import { HomeCourseBadge } from "./home-course-badge";
+import { StaticBio } from "./static-bio";
 
 interface ProfileProps {
   userId: string;
@@ -36,15 +37,11 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
         </div>
         <HomeCourseBadge user={user} />
       </CardHeader>
-      <CardContent className="">
+      <CardContent>
         {editable ? (
-          bio ? (
-            <Bio userId={userId} text={bio} />
-          ) : (
-            <Bio userId={userId} text="No bio provided" />
-          )
+          <Bio userId={userId} initialBio={bio} />
         ) : (
-          <p className="text-muted-foreground">{bio}</p>
+          <StaticBio bio={bio} />
         )}
       </CardContent>
     </Card>
