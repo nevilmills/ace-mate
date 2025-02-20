@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardContent } from "./ui/card";
+import { Card, CardHeader, CardContent, CardFooter } from "./ui/card";
 import Image from "next/image";
 import { getUserById } from "@/db/queries/user/select";
 import { Bio } from "./bio";
@@ -7,6 +7,7 @@ import { Handicap } from "./handicap";
 import { Badge } from "./ui/badge";
 import { HomeCourseBadge } from "./home-course-badge";
 import { StaticBio } from "./static-bio";
+import { AddFriendBtn } from "./add-friend-btn";
 
 interface ProfileProps {
   userId: string;
@@ -44,6 +45,9 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
           <StaticBio bio={bio} />
         )}
       </CardContent>
+      <CardFooter>
+        {editable ? null : <AddFriendBtn userId={userId} />}
+      </CardFooter>
     </Card>
   );
 };
