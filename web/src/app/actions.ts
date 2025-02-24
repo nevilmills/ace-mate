@@ -3,6 +3,8 @@
 import { getGolfCourseById } from "@/db/queries/golf-course/select";
 import { getFeedPosts, getMostPlayedCourseId } from "@/db/queries/post/select";
 import { getUsersByIds } from "@/db/queries/user/select";
+import { deleteUserFriend } from "@/db/queries/user_friends/delete";
+import { createUserFriend } from "@/db/queries/user_friends/insert";
 import { getUsersFriends } from "@/db/queries/user_friends/select";
 
 export const fetchPosts = async ({
@@ -29,4 +31,14 @@ export const getMostPlayedCourse = async (userId: string) => {
   if (!golfCourseId) return;
   const golfCourse = await getGolfCourseById(golfCourseId.golfCourseId);
   return golfCourse?.name;
+};
+
+export const addFriend = async (loggedInUser: string, friendId: string) => {
+  createUserFriend(loggedInUser, friendId);
+  createUserFriend(friendId, loggedInUser);
+};
+
+export const removeFriend = async (loggedInUser: string, friendId: string) => {
+  deleteUserFriend(loggedInUser, friendId);
+  deleteUserFriend(friendId, loggedInUser);
 };

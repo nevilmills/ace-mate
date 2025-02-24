@@ -19,6 +19,7 @@ import { FlagTriangleRight } from "lucide-react";
 import { createUserFriend } from "@/db/queries/user_friends/insert";
 import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { addFriend, removeFriend } from "@/app/actions";
 
 interface AddFriendButtonProps {
   friends: ExistingUser[];
@@ -69,8 +70,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
   };
 
   const handleAddFriend = (friendId: string) => {
-    createUserFriend(loggedInUser!, friendId);
-    createUserFriend(friendId, loggedInUser!);
+    addFriend(loggedInUser!, friendId);
     setFriendsMap((prevFriendsMap) => ({
       ...prevFriendsMap,
       [friendId]: true,
@@ -82,8 +82,7 @@ export const AddFriendButton: React.FC<AddFriendButtonProps> = ({
   };
 
   const handleUnfriend = (friendId: string) => {
-    deleteUserFriend(loggedInUser!, friendId);
-    deleteUserFriend(friendId, loggedInUser!);
+    removeFriend(loggedInUser!, friendId);
     setFriendsMap((prevFriendsMap) => ({
       ...prevFriendsMap,
       [friendId]: false,
