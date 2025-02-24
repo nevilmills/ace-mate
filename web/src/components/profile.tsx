@@ -10,7 +10,7 @@ import { StaticBio } from "./static-bio";
 import { AddFriendBtn } from "./add-friend-btn";
 
 interface ProfileProps {
-  userId: string;
+  userId: string; // userId of the user whose profile is being displayed
   editable: boolean;
 }
 
@@ -46,7 +46,7 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
         )}
       </CardContent>
       <CardFooter>
-        {editable ? null : <AddFriendBtn userId={userId} />}
+        {editable ? null : <AddFriendBtn friendId={userId} />}
       </CardFooter>
     </Card>
   );

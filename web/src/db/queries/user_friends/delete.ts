@@ -16,7 +16,6 @@ export const deleteUserFriend = async (userId: string, friendId: string) => {
       .where(
         and(eq(userFriends.userId, userId), eq(userFriends.friendId, friendId))
       );
-    console.log("Result:", result);
   } catch (err) {
     console.log("error:", err);
   }

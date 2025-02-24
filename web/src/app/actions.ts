@@ -42,3 +42,9 @@ export const removeFriend = async (loggedInUser: string, friendId: string) => {
   deleteUserFriend(loggedInUser, friendId);
   deleteUserFriend(friendId, loggedInUser);
 };
+
+export const areUsersFriends = async (userId: string, friendId: string) => {
+  const userFriends = await getUsersFriends(userId);
+  const friendIds = userFriends.map((userFriend) => userFriend.friendId);
+  return friendIds.includes(friendId);
+};
