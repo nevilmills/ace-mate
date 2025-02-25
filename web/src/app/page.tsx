@@ -3,6 +3,7 @@ import { FriendsList } from "@/components/friends-list";
 import { Profile } from "@/components/profile";
 import { auth } from "@clerk/nextjs/server";
 import { fetchUsersFriends } from "./actions";
+import { StatisticsButton } from "@/components/statistics-button";
 
 export const Home = async ({
   searchParams,
@@ -23,8 +24,8 @@ export const Home = async ({
       <Feed userId={userId} friends={friends} searchParams={searchParams} />
       <div className="flex flex-col space-y-8">
         <div className="h-[24px]" />
-
         <Profile editable={true} userId={userId} />
+        <StatisticsButton />
       </div>
     </div>
   );
