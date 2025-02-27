@@ -20,3 +20,29 @@ export const calculateHandicapFromPosts = (
   const average = sum / topScores.length;
   return average;
 };
+
+export const getLast12Months = () => {
+  const months = [];
+  const date = new Date(); // Get current date
+
+  for (let i = 0; i < 12; i++) {
+    months.unshift({
+      month: date.getMonth(), // Zero-based month (0 = Jan, 11 = Dec)
+      year: date.getFullYear(),
+    });
+
+    // Move back one month
+    date.setMonth(date.getMonth() - 1);
+  }
+  return months;
+};
+
+// Format the months array to be displayed in the chart x-axis.
+// result will be in ascending order of months.
+export const formatMonthsArray = (monthsArray: { month: number }[]) => {
+  return monthsArray.map(({ month }) => ({
+    month: new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      new Date(2000, month)
+    ), // Using a fixed year
+  }));
+};
