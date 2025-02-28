@@ -2,7 +2,7 @@
 
 import { db } from "@/db/db";
 import { golf_course, post, user } from "@/db/schema";
-import { and, count, desc, eq, inArray, lt, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, inArray, lt, sql } from "drizzle-orm";
 
 export const getPostsByUserWithCourse = async (userId: string) => {
   const posts = await db
@@ -92,4 +92,19 @@ export const getMostPlayedCourseId = async (userId: string) => {
     .limit(1);
 
   return result[0] ?? null; // Return first result or null if none found
+};
+
+export const getPostsFromLast6Months = async (userId: string) => {
+  const posts = await db
+    .select()
+    .from(post)
+    .where(
+      and(
+        eq(post.userId, userId),
+        gt(post.date, sql`now() - interval '6 months'`)
+      )
+    )
+    .orderBy(asc(post.date))
+    .innerJoin(golf_course, eq(post.golfCourseId, golf_course.id));
+  return posts;
 };

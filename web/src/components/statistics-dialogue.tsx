@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { DialogContent } from "./ui/dialog";
+import { DialogContent, DialogTitle } from "./ui/dialog";
 import {
   ChartContainer,
   ChartConfig,
@@ -10,16 +10,16 @@ import {
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { Button } from "./ui/button";
 import { formatMonthsArray, getLast12Months } from "@/lib/utils";
-interface StatisticsDialogueProps {}
+import { getChartData } from "@/app/actions";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+interface StatisticsDialogueProps {
+  userId: string;
+}
 
 const config = {
   desktop: {
-    label: "Desktop",
+    label: "To par",
     color: "#2563eb",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
   },
 } satisfies ChartConfig;
 
@@ -34,22 +34,30 @@ const chartData = [
   { month: "June", desktop: 214, mobile: 140 },
 ];
 
-export const StatisticsDialogue: React.FC<StatisticsDialogueProps> = ({}) => {
-  const [data, setData] = useState<{ month: string }[]>([]);
+export const StatisticsDialogue: React.FC<StatisticsDialogueProps> = ({
+  userId,
+}) => {
+  const [data, setData] = useState<any[]>([]);
   useEffect(() => {
     const loadData = async () => {
-      const months = getLast12Months();
-      const formattedMonths = formatMonthsArray(months);
-      setData(formattedMonths);
-      console.log(formattedMonths);
+      const postData = await getChartData(userId);
+      setData(postData);
     };
     loadData();
   }, []);
 
+  useEffect(() => {
+    console.log("data is: ", data);
+  }, [data]);
+
   return (
     <DialogContent className="bg-[#0a0a0a] max-w-[900px] h-[600px] overflow-hidden flex flex-row items-center justify-center">
+      <VisuallyHidden>
+        <DialogTitle>Recent Scores Chart</DialogTitle>
+      </VisuallyHidden>
+
       <ChartContainer config={config} className="min-h-[200px] w-3/4">
-        <BarChart accessibilityLayer data={chartData}>
+        <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="date"
@@ -59,11 +67,14 @@ export const StatisticsDialogue: React.FC<StatisticsDialogueProps> = ({}) => {
             // tickFormatter={(value) => value.slice(0, 3)}
           />
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+          <Bar
+            dataKey="differenceFromPar"
+            fill="var(--color-desktop)"
+            radius={4}
+          />
         </BarChart>
       </ChartContainer>
-      <Button onClick={() => getLast12Months()}>months</Button>
+      <Button onClick={() => getChartData(userId)}>get data</Button>
     </DialogContent>
   );
 };

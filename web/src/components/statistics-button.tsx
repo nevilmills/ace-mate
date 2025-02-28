@@ -8,9 +8,13 @@ import {
 } from "lucide-react";
 import { StatisticsDialogue } from "./statistics-dialogue";
 
-interface StatisticsButtonProps {}
+interface StatisticsButtonProps {
+  userId: string;
+}
 
-export const StatisticsButton: React.FC<StatisticsButtonProps> = ({}) => {
+export const StatisticsButton: React.FC<StatisticsButtonProps> = ({
+  userId,
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -18,7 +22,7 @@ export const StatisticsButton: React.FC<StatisticsButtonProps> = ({}) => {
           View stats <ChartNoAxesColumnIncreasing size={16} className="ml-1" />
         </Button>
       </DialogTrigger>
-      <StatisticsDialogue />
+      <StatisticsDialogue userId={userId} />
     </Dialog>
   );
 };
