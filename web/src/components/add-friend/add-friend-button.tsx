@@ -3,8 +3,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
@@ -13,11 +11,8 @@ import { Input } from "../ui/input";
 import { getUserAutocompletion } from "@/db/queries/user/select";
 import { UserCard } from "./user-card";
 import { ScrollArea } from "../ui/scroll-area";
-import { useAuth } from "@clerk/nextjs";
 import { ExistingUser } from "@/db/schema";
 import { FlagTriangleRight } from "lucide-react";
-import { createUserFriend } from "@/db/queries/user_friends/insert";
-import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { addFriend, removeFriend } from "@/app/actions";
 
