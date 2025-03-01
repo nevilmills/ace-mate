@@ -60,7 +60,7 @@ export const StatisticsDialogue: React.FC<StatisticsDialogueProps> = ({
         <BarChart accessibilityLayer data={data}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="date"
+            dataKey="label"
             tickLine={false}
             tickMargin={10}
             axisLine={false}

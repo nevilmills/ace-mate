@@ -10,6 +10,7 @@ import { getUsersByIds } from "@/db/queries/user/select";
 import { deleteUserFriend } from "@/db/queries/user_friends/delete";
 import { createUserFriend } from "@/db/queries/user_friends/insert";
 import { getUsersFriends } from "@/db/queries/user_friends/select";
+import { addXAxisLabels } from "@/lib/utils";
 
 export const fetchPosts = async ({
   page = 1,
@@ -66,5 +67,8 @@ export const getChartData = async (userId: string) => {
     return newItem;
   });
 
-  return newData;
+  // get x-axis labels for the data
+  const result = addXAxisLabels(newData);
+
+  return result;
 };

@@ -1,6 +1,7 @@
 import { ExistingPost, GolfCourse } from "@/db/schema";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { format } from "date-fns";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -45,4 +46,31 @@ export const formatMonthsArray = (monthsArray: { month: number }[]) => {
       new Date(2000, month)
     ), // Using a fixed year
   }));
+};
+
+export const addXAxisLabels = (
+  posts: { date: Date; differenceFromPar: number }[]
+) => {
+  if (posts.length === 0) return [];
+
+  // Sort by date (Date objects can be compared directly)
+  const sortedPosts = posts.sort((a, b) => a.date.getTime() - b.date.getTime());
+  const totalPosts = sortedPosts.length;
+
+  // Select 9 evenly spaced indices
+  const labelIndices = Array.from({ length: 6 }, (_, i) =>
+    Math.round((i * (totalPosts - 1)) / 5)
+  );
+
+  // Add labels to the selected indices
+  return sortedPosts.map((post, index) => {
+    if (labelIndices.includes(index)) {
+      return {
+        ...post,
+        label: format(post.date, "MMM d"),
+      };
+    } else {
+      return post;
+    }
+  });
 };
