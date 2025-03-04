@@ -45,9 +45,11 @@ export const Profile: React.FC<ProfileProps> = async ({ userId, editable }) => {
           <StaticBio bio={bio} />
         )}
       </CardContent>
-      <CardFooter>
-        {editable ? null : <AddFriendBtn friendId={userId} />}
-      </CardFooter>
+      {editable ? null : (
+        <CardFooter>
+          <AddFriendBtn friendId={userId} />
+        </CardFooter>
+      )}
     </Card>
   );
 };
