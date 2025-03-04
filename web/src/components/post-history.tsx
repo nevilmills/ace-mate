@@ -13,7 +13,13 @@ export const PostHistory: React.FC<PostHistoryProps> = async ({ user }) => {
   return (
     <div className="w-[750px] flex flex-col space-y-4">
       <h3 className="text-2xl font-bold pl-6">Scoring history</h3>
-      <InfiniteScroll initialPosts={posts} userIds={[user.id]} />
+      {posts.length === 0 ? (
+        <div className="text-muted-foreground pt-4 text-lg">
+          No posts found.
+        </div>
+      ) : (
+        <InfiniteScroll initialPosts={posts} userIds={[user.id]} />
+      )}
     </div>
   );
 };
