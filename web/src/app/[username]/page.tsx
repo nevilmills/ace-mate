@@ -3,6 +3,19 @@ import { Profile } from "@/components/profile";
 import { getUserByUsername } from "@/db/queries/user/select";
 import React from "react";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const username = (await params).username;
+
+  return {
+    title: `${username}'s profile | AceMate`,
+    icons: "/images/favicon.ico",
+  };
+}
+
 interface PageProps {
   params: Promise<{ username: string }>;
 }
