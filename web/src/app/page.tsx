@@ -25,7 +25,6 @@ export const Home = async ({
       <div className="flex flex-col space-y-8">
         <div className="h-[24px]" />
         <Profile editable={true} userId={userId} />
-        <StatisticsButton userId={userId} />
       </div>
     </div>
   );
