@@ -14,7 +14,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
           </div>
 
           <a href="/" className="text-xl font-bold">
-            TeeLinks
+            AceMate
           </a>
         </div>
         <div>
