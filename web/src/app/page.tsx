@@ -3,7 +3,12 @@ import { FriendsList } from "@/components/friends-list";
 import { Profile } from "@/components/profile";
 import { auth } from "@clerk/nextjs/server";
 import { fetchUsersFriends } from "./actions";
-import { StatisticsButton } from "@/components/statistics-button";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "AceMate",
+  icons: "/images/favicon.ico",
+};
 
 export const Home = async ({
   searchParams,
