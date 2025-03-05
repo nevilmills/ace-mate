@@ -10,7 +10,7 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
       <nav className="flex flex-row justify-between items-center grow">
         <div className="flex space-x-4 items-center">
           <div className="h-[50px] w-[50px] rounded-lg overflow-hidden">
-            <Image src="/images/logo7.png" width={50} height={50} alt="Logo" />
+            <Image src="/images/logo.png" width={50} height={50} alt="Logo" />
           </div>
 
           <a href="/" className="text-xl font-bold">
