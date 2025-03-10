@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   icons: "/images/favicon.ico",
 };
 
-const page: React.FC = async () => {
+export default async function Page() {
   const golfCourses = await getGolfCourses();
 
   return (
@@ -16,6 +16,4 @@ const page: React.FC = async () => {
       <PostCreator golfCourses={golfCourses} />
     </div>
   );
-};
-
-export default page;
+}

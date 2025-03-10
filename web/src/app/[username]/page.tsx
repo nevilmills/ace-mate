@@ -20,7 +20,7 @@ interface PageProps {
   params: Promise<{ username: string }>;
 }
 
-export const Page: React.FC<PageProps> = async ({ params }) => {
+export default async function Page({ params }: PageProps) {
   const username = (await params).username;
   // find user with this username, if none exist, redirect to 404
   // const { id: userId } = await getUserByUsername(username);
@@ -39,6 +39,4 @@ export const Page: React.FC<PageProps> = async ({ params }) => {
       </div>
     </div>
   );
-};
-
-export default Page;
+}

@@ -10,11 +10,11 @@ export const metadata: Metadata = {
   icons: "/images/favicon.ico",
 };
 
-export const Home = async ({
+export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}) => {
+}) {
   const { userId } = await auth();
 
   if (!userId) {
@@ -33,6 +33,4 @@ export const Home = async ({
       </div>
     </div>
   );
-};
-
-export default Home;
+}
