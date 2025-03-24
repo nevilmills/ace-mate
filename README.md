@@ -1,7 +1,7 @@
 <div align="center">
   <h1>AceMate</h1>
 </div>
-Welcome to AceMate! This is a fun side project built with Next.js to create an engaging social platform where you can connect with other golf enthusiasts, share recent scores, and track your handicap.
+Welcome to AceMate! This is a fun side project built with Next.js as an engaging social platform where you can connect with other golf enthusiasts, share recent scores, and track your handicap.
 
 ## Tech Stack
 - **Next.js**
